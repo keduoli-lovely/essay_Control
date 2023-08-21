@@ -26,16 +26,16 @@
 		</view>
 		
 		<view class="btn-icon" @click="close">
-			<el-icon><CloseBold /></el-icon>
+			<el-icon class="icon"><CloseBold /></el-icon>
 		</view>
 		
 	</view>
 	
-	<view class="mask" v-if="essaytcstate"></view>
-	
+	<page_BG v-if="essaytcstate" />
 </template>
 
 <script setup>
+	import page_BG from '../page_BG/page_BG.vue'
 	import { maskstate } from "../../store/maskstare.js"
 	import { storeToRefs } from 'pinia'
 	
@@ -44,33 +44,23 @@
 		datatc: Object
 	})
 	
-	
 	let close = () => {
 		essaytcstate.value = false
 	}
 </script>
 
 <style lang="scss" scoped>
-	.mask {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 10;
-		background-color: rgba(0,0,0,.2);
-	}
-	.atv {
-		opacity: 1;
-		top: 50%;
-	}
-	.noatv {
-		opacity: 0;
-		top: 0%;
-		z-index: -1 !important;
-	}
+.atv {
+	opacity: 1;
+	top: 50%;
+}
+.noatv {
+	opacity: 0;
+	top: 0%;
+	z-index: -1 !important;
+}
 .notification {
-	transition: all .6s ease-in-out;
+	transition: all .4s ease-in-out;
 	z-index: 99;
 	padding: 50rpx 80rpx;
 	position: fixed;
@@ -128,6 +118,11 @@
 		top: 35rpx;
 		right: 35rpx;
 		font-size: 45rpx;
+		.icon {
+			&:hover {
+				color: skyblue;
+			}
+		}
 	}
 }
 </style>

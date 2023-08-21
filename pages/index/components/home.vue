@@ -16,7 +16,7 @@
 					权限: root
 				</view>
 				<view class="time">
-					时间: 2023-8-8
+					时间: {{ newtime }}
 				</view>
 			</view>
 		</el-card>
@@ -152,7 +152,13 @@
 
 <script setup>
 	import * as echarts from "echarts";
-	import { ref, onMounted } from 'vue';
+	import { ref, onMounted, computed } from 'vue';
+	import dayjs from 'dayjs'
+	
+	// 当前时间
+	let newtime = computed(() => {
+		return dayjs(new Date()).format('YYYY-MM-DD')
+	})
 	
 	 let rootname = ref('keduoli')
 	 

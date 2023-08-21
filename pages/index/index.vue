@@ -97,7 +97,6 @@
 	import { onLoad } from '@dcloudio/uni-app'
 	import { userdata } from '../../store/Usedata.js'
 	
-	
 	// 获取必要数据
 	onMounted(() => {
 		let token = uni.getStorageSync('root').token

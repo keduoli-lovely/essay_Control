@@ -42,15 +42,25 @@
 			</view>
 		</view>
 	</view>
+	
+	<page_BG v-if="createuserstate" />
 </template>
 
 <script setup>
+	import page_BG from '../page_BG/page_BG.vue'
 	import { maskstate } from '../../store/maskstare.js'
 	import { storeToRefs } from 'pinia'
 	import { ref, onMounted } from 'vue'
 	import { createFn } from '../../utils/createelection.js'
 	import { pushnewuser } from '../../apis/pushnewuserdata.js'
+	import { bubble } from '../../store/bubblesta.js'
+	import { userdata } from '../../store/Usedata.js'
 	
+	// 获取用户数据 / 创建用户后重新获取用户数据
+	let { getuserdata } = userdata()
+	// 弹窗
+	let { keduoli } = bubble()
+	// 遮罩状态
 	let { createuserstate } = storeToRefs(maskstate())
 	let name = ref('')
 	let acc = ref('')
@@ -61,22 +71,32 @@
 	let createuser
 	
 	onMounted(() => {
-		createuser = () => {
+		createuser = async () => {
 			if(sta.value) return
 			if(name.value.length >= 2 && name.value.length <= 8) {
 				if(acc.value.length >= 6 && acc.value.length <= 11) {
 					if(pwd.value.length >= 6 && pwd.value.length <= 15) {
 						if(sex.value > 0) {
 							if(age.value > 0 && age.value < 200) {
-								let res = pushnewuser({
+								let res = await pushnewuser({
 									name: name.value,
 									account: acc.value,
 									password: pwd.value,
 									sex: sex.value,
 									age: age.value
 								})
-								console.log(res)
-								createuserstate.value = false
+								if(res.data.code == 20020) {
+									keduoli('succeed', res.data.message)
+									getuserdata(20)
+									createuserstate.value = false
+									name.value = ''
+									acc.value = ''
+									pwd.value = ''
+									sex.value = 2
+									age.value = ''
+								}else {
+									keduoli('fail', res.data.message)
+								}
 							}else {
 								let el = document.querySelector('.createage')
 								showtextfn('年龄超出范围', el)
@@ -118,7 +138,7 @@
 		position: relative;
 		opacity: 1 !important;
 		top: 50% !important;
-		z-index: 10 !important;
+		z-index: 99 !important;
 	}
 	.create {
 		z-index: -1;

@@ -18,9 +18,12 @@
 			</view>
 		</view>
 	</view>
+	
+	<page_BG v-if="tckstate" />
 </template>
 
 <script setup>
+	import page_BG from '../page_BG/page_BG.vue'
 	import { maskstate } from '../../store/maskstare.js'
 	import { storeToRefs } from 'pinia'
 	
@@ -37,7 +40,7 @@
 	.atv {
 		top: 50% !important;
 		opacity: 1 !important;
-		z-index: 10 !important;
+		z-index: 99 !important;
 	}
 	.floor {
 		transition: all .3s ease;

@@ -28,8 +28,7 @@
 				</view>
 			</view>
 		</el-card>
-		
-		<el-card class="box2">
+		<el-card class="box2" v-if="essaydata[0]?.user_id">
 			<listItem
 				v-show="navindex === 0"
 				v-for="(item, i) in essaydata" :key="i"
@@ -41,7 +40,7 @@
 				v-show="navindex === 1"
 				v-for="(item, i) in essaydata" :key="i"
 				:essaylist="item"
-				:select2="'忽略本条'"
+				:select2="'通过审核'"
 				@datatcFn="changedata(item)"
 			></listItem>
 			
@@ -57,27 +56,39 @@
 				v-show="navindex === 3"
 				v-for="(item, i) in essaydata" :key="i"
 				:essaylist="item"
+				:select2="'确认违规'"
 				@datatcFn="changedata(item)"
 			></listItem>
 		</el-card>
 	</view>
 	
+	<Choice>
+		<view>
+			{{ tipsText }}
+		</view>
+	</Choice>
 	<notification
 		:datatc="datatc"
 	></notification>
 </template>
 
 <script setup>
-	import {
-		ref
-	} from 'vue'
+	/*
+		@todo1: 文章时间不准确
+		@todo2: 文章审核等方法和路由的实现
+		@todo3: index.vue 页面的根高度为100vh(屏幕高度)导致显示不正常
+	*/
+	import { ref } from 'vue'
+	import Choice from '../../../components/Choice/Choice.vue'
 	import listItem from '../../../components/listItem/listItem.vue'
 	import notification from '../../../components/notification/notification.vue'
 	import { maskstate } from '../../../store/maskstare.js'
 	import { storeToRefs } from 'pinia'
 	import { userdata } from '../../../store/Usedata.js'
+	import { otherdata } from '../../../store/otherData.js' 
 	
-	
+	// 文章页面的方法区分
+	let { page_index, tipsText } = storeToRefs(otherdata())
 	// 文章数据
 	let { getessaydata } = userdata()
 	let { essaydata } = storeToRefs(userdata())
@@ -97,6 +108,7 @@
 	
 
 	let addindex = (i) => {
+		page_index.value = i
 		navindex.value = i
 		left.value = 200 * i
 	}
@@ -177,11 +189,6 @@
 			}
 		}
 		
-		.box2 {
-			height: 400rpx;
-		}
-		
 	}
-	
 	
 </style>

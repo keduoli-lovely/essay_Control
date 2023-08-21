@@ -15,6 +15,7 @@ http.interceptors.request.use(function (config) {
       return config;
     }, function (error) {
       // 对请求错误做些什么
+	 
       return Promise.reject(error);
   });
 
@@ -24,6 +25,12 @@ http.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
     // 对响应错误做点什么
+	if(error.response.status == 401) {
+		uni.removeStorageSync('root')
+		uni.reLaunch({
+			url: '/pages/admin/admin'
+		})
+	}
     return Promise.reject(error);
   });
   

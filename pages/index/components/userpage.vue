@@ -7,7 +7,7 @@
 		<view @click="allsel" class="item-sel">全选</view>
 		<view @click="closesel" class="item-sel">取消全选</view>
 		<view @click="dellistuser" class="item-sel">删除所选用户<span v-if="userlistlength > 0 ">(已选择{{ userlistlength }}个用户)</span></view>
-		<view class="item-sel">刷新</view>
+		<view @click="update" class="item-sel">刷新</view>
 	</view>
 	<view class="user">
 		<view class="header">
@@ -45,10 +45,11 @@
 		:account="userrowid"
 	 />
 	 <createuseritem />
-	 
+	 <bubble />
 </template>
 
 <script setup>
+	import bubble from '../../../components/bubble/bubble.vue'
 	import userList from '../../../components/userList/userList.vue'
 	import tckfloor from '../../../components/tckfloor/tckfloor.vue'
 	import createuseritem from '../../../components/createuseritem/createuseritem.vue'
@@ -57,7 +58,10 @@
 	import { delrowuser } from '../../../apis/delrowuser.js'
 	import { storeToRefs } from 'pinia'
 	import { ref, computed } from 'vue'
+	import { bubble as bubblesta } from '../../../store/bubblesta.js'
 	
+	
+	let { keduoli } = bubblesta()
 	// 用户数据列表
 	let userrowid = ref('')
 	let userlist_id = ref([])
@@ -75,12 +79,14 @@
 	})
 	let changechoose = () => {
 		if(choose.value) {
+			userlistlength.value = 0
 			allchoose.value = false
 		}
 		choose.value = !choose.value
 	}
 	// 全选状态
 	let allsel = () => {
+		if(!choose.value) return
 		let tmp = ref([])
 		allchoose.value = true
 		userdatalist.value.forEach(item => {
@@ -92,6 +98,7 @@
 	}
 	// 取消全选
 	let closesel = () => {
+		if(!choose.value) return
 		allchoose.value = false
 		userlistlength.value = 0
 		userlist_id.value = []
@@ -108,17 +115,22 @@
 	
 	// 批量删除用户
 	let dellistuser = async () => {
+		if(!choose.value) return
 		if(userlist_id.value.length) {
 			// api
-			console.log(userlist_id.value)
+			let parting = confirm('确认')
+			if(!parting) return
 			let res = await delrowuser(userlist_id.value)
-			console.log(res)
+			keduoli('succeed', res.data.message)
+			getuserdata(20)
 		}
 	}
 	
 	let deluser = async () => {
 		let res = await delrowuser(userrowid.value)
 		if(res.data.code === 20000) {
+			tckstate.value = false
+			keduoli('succeed', res.data.message)
 			getuserdata(20)
 		}
 		
@@ -128,6 +140,12 @@
 	}
 	let getuserrowid = (id) => {
 		userrowid.value = id
+	}
+	
+	let update = () => {
+		getuserdata(20).then(data => {
+			keduoli('succeed', data.data.message)
+		})
 	}
 	
 </script>

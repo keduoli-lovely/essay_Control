@@ -1,8 +1,4 @@
 <template>
-	<view class="mask" v-if="essaytcstate">
-
-	</view>
-
 	<view class="toshow" :class="essaytcstate ? 'atv' : ''">
 		<view class="close" @click="essaytcstate = false">
 			<el-icon>
@@ -10,7 +6,7 @@
 			</el-icon>
 		</view>
 		<view class="pic">
-			<image src="../../public/bg.png" mode="aspectFill"></image>
+			<image :src="rowuserdata.pic" mode="aspectFill"></image>
 		</view>
 		<view class="name t12" style="display: flex">
 			<p>昵称</p>&nbsp;
@@ -59,9 +55,12 @@
 			</view>
 		</view>
 	</view>
+	
+	<page_BG v-if="essaytcstate" />
 </template>
 
 <script setup>
+	import page_BG from '../page_BG/page_BG.vue'
 	import { maskstate } from '../../store/maskstare.js'
 	import { userdata } from '../../store/Usedata.js'
 	import { storeToRefs } from 'pinia'
@@ -73,19 +72,10 @@
 </script>
 
 <style lang="scss" scoped>
-	.mask {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 10;
-		background-color: rgba(0, 0, 0, .1);
-	}
 	.atv {
 		top: 50% !important;
 		opacity: 1 !important;
-		z-index: 10 !important;
+		z-index: 99 !important;
 	}
 	.toshow {
 		transition: all .3s ease;

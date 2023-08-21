@@ -9,12 +9,17 @@ export const maskstate = defineStore('mask', () => {
 	let tckstate = ref(false)
 	let createuserstate = ref(false)
 	
+	// essay
+	let essay_choice = ref(false)
+	
 	return {
 		essaytcstate,
 		choose,
 		allchoose,
 		choosearray,
 		tckstate,
-		createuserstate
+		createuserstate,
+		// essay
+		essay_choice
 	}
 })

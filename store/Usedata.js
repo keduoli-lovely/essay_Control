@@ -13,6 +13,7 @@ export const userdata = defineStore('data', () => {
 		// todo
 		let res = await getuser(limit)
 		userdatalist.value = res.data.result.data
+		return res
 	}
 	
 	const getessaydata = async (limit) => {
