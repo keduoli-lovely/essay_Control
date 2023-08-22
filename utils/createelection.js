@@ -1,10 +1,10 @@
 let span = 	document.createElement('span')
 span.style.cssText = `
 	position: absolute;
-	bottom: -6px;
-	left: 30%;
+	bottom: -20px;
+	left: 0;
 	color: red;
-	font-size: 12px;
+	font-size: 18px;
 	transform: scale(.6);
 `
 span.className = 'keduoli'
