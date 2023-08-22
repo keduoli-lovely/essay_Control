@@ -3,7 +3,7 @@
 		<el-card class="card" body-style="display: flex;flex-direction: column;align-items: center">
 			<view class="userinfo">
 				<view class="user-pic">
-					<image src="../../../public/bg.png" mode="aspectFill"></image>
+					<image src="/public/bg.jpg" mode="aspectFill"></image>
 				</view>
 				
 				<view class="user-name">
