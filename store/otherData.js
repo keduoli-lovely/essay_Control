@@ -4,7 +4,7 @@ import { ref } from 'vue'
 export const otherdata = defineStore('other', () => {
 	// essay
 	let listitem_id = ref('')
-	
+	let only_index = ref(false)
 	// essay page fn
 	let page_index = ref(0)
 	
@@ -13,6 +13,7 @@ export const otherdata = defineStore('other', () => {
 	return {
 		listitem_id,
 		page_index,
-		tipsText
+		tipsText,
+		only_index
 	}
 })

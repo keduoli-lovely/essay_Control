@@ -60,6 +60,7 @@
 	z-index: -1 !important;
 }
 .notification {
+	overflow-y: hidden; 
 	transition: all .4s ease-in-out;
 	z-index: 99;
 	padding: 50rpx 80rpx;

@@ -27,6 +27,11 @@
 				{{ select2 }}
 				
 			</view>
+			
+			<view class="del" @click="innocent" v-if="select2 == '确认违规'">
+				没有违规
+				
+			</view>
 		</view>
 	</view>
 </template>
@@ -41,7 +46,7 @@
 	
 	let sta_two = ref(true)
 	let { essay_choice } = storeToRefs(maskstate())
-	let { listitem_id, page_index, tipsText } = storeToRefs(otherdata())
+	let { listitem_id, page_index, tipsText, only_index } = storeToRefs(otherdata())
 	let emit = defineEmits(['datatcFn'])
 	
 	let props = defineProps({
@@ -56,7 +61,7 @@
 		}
 	})
 	let pushtime = computed(() => {
-		return dayjs(props.essaylist.time).format('YYYY-MM-DD HH:mm')
+		return dayjs(props.essaylist.time).format('YYYY-MM-DD')
 	})
 	let showtc = () => {
 		emit('datatcFn')
@@ -80,12 +85,20 @@
 			case 3:
 				// 页面4的方法
 				tipsText.value = '确认文章违规！！！'
+				only_index.value = false
 				allpage()
 				break;
 		}
 	}
 	// 全部页面的方法
 	let allpage = () => {
+		listitem_id.value = props.essaylist._id
+		essay_choice.value = true
+	}
+	// 无违规
+	let innocent = () => {
+		only_index.value = true
+		tipsText.value = '确认文章无违规！！！'
 		listitem_id.value = props.essaylist._id
 		essay_choice.value = true
 	}

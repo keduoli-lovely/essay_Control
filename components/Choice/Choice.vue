@@ -33,9 +33,11 @@
 	import { userdata } from '../../store/Usedata.js'
 	import { storeToRefs } from 'pinia'
 	import { removeessay } from '../../apis/reomEssayrow.js'
+	import { changeessaysta } from '../../apis/classify.js'
+	
 	
 	let { essay_choice } = storeToRefs(maskstate())
-	let { listitem_id, page_index } = storeToRefs(otherdata())
+	let { listitem_id, page_index, only_index } = storeToRefs(otherdata())
 	let { keduoli } = bubblesta()
 	let { getessaydata } = userdata()
 	
@@ -52,15 +54,21 @@
 				break;
 			case 1:
 				// fn
-				review()
+				review(1)
 				break;
 			case 2:
 				// fn
-				backreview()
+				review(0)
 				break;
 			case 3:
 				// fn
-				Violations()
+				let index = -1
+				if(only_index.value) {
+					index = 1
+				}else {
+					index = -1
+				}
+				review(index)
 				break;
 		}
 	}
@@ -72,17 +80,15 @@
 		getessaydata(20)
 	}
 	// 提交审核
-	let review = () => {
-		console.log('1todoing...')
-	}
 	// 重新审核
-	let backreview = () => {
-		console.log('2todoing...')
-	}
 	// 处理违规文章
-	let Violations = () => {
-		console.log('3todoing...')
+	let review = async (index) => {
+		let res = await changeessaysta(index, listitem_id.value)
+		keduoli('succeed', res.data.message)
+		getessaydata(20)
+		essay_choice.value = false
 	}
+
 </script>
 
 <style lang="scss" scoped>

@@ -28,7 +28,7 @@
 				</view>
 			</view>
 		</el-card>
-		<el-card class="box2" v-if="essaydata[0]?.user_id">
+		<el-card class="box2" v-if="decision">
 			<listItem
 				v-show="navindex === 0"
 				v-for="(item, i) in essaydata" :key="i"
@@ -37,24 +37,27 @@
 			></listItem>
 			
 			<listItem
+				v-if="review.length"
 				v-show="navindex === 1"
-				v-for="(item, i) in essaydata" :key="i"
+				v-for="(item, i) in review" :key="i"
 				:essaylist="item"
 				:select2="'通过审核'"
 				@datatcFn="changedata(item)"
 			></listItem>
 			
 			<listItem
+				v-if="backreview.length"
 				v-show="navindex === 2"
-				v-for="(item, i) in essaydata" :key="i"
+				v-for="(item, i) in backreview" :key="i"
 				:essaylist="item"
 				:select2="'重新审核'"
 				@datatcFn="changedata(item)"
 			></listItem>
 			
 			<listItem
+				v-if="report.length"
 				v-show="navindex === 3"
-				v-for="(item, i) in essaydata" :key="i"
+				v-for="(item, i) in report" :key="i"
 				:essaylist="item"
 				:select2="'确认违规'"
 				@datatcFn="changedata(item)"
@@ -78,7 +81,7 @@
 		@todo2: 文章审核等方法和路由的实现
 		@todo3: index.vue 页面的根高度为100vh(屏幕高度)导致显示不正常
 	*/
-	import { ref } from 'vue'
+	import { ref, computed, watch } from 'vue'
 	import Choice from '../../../components/Choice/Choice.vue'
 	import listItem from '../../../components/listItem/listItem.vue'
 	import notification from '../../../components/notification/notification.vue'
@@ -87,6 +90,7 @@
 	import { userdata } from '../../../store/Usedata.js'
 	import { otherdata } from '../../../store/otherData.js' 
 	
+
 	// 文章页面的方法区分
 	let { page_index, tipsText } = storeToRefs(otherdata())
 	// 文章数据
@@ -98,6 +102,46 @@
 	// 距离
 	let left = ref(0)
 	
+	/**
+	*	@review 过滤的待审核数据
+	* 	@backreview 重新审核的数据
+	* 	@report 被举报的数据
+	* `@filterdata 过滤方法
+	*/
+   let filterdata = (sta) => {
+   	return Object.values(essaydata.value).filter(item => {
+   		return item.state == sta
+   	})
+   }
+	let review = computed(() => {
+		return filterdata(0)
+	})
+	let backreview = computed(() => {
+		return filterdata(1)
+	})
+	
+	let report = computed(() => {
+		return filterdata(-1)
+	})
+	/**
+	 * @decision 判断card2的显示
+*/
+	let decision = ref(true)
+	watch([ navindex, essaydata ], () => {
+		if(!essaydata.value[0]?.user_id) {
+			decision.value = false
+		}else {
+			decision.value = true
+		}
+		if(navindex.value == 1) {
+			decision.value = review.value.length <= 0 ? false : true 
+		}else if(navindex.value == 2) {
+			decision.value = backreview.value.length <= 0 ? false : true 
+		}else if(navindex.value === 3) {
+			decision.value = report.value.length <= 0 ? false : true 
+		}
+	})
+   
 	// 弹窗数据
 	let datatc = ref({})
 	let { essaytcstate } = storeToRefs(maskstate())
