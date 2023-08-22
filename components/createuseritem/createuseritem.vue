@@ -5,7 +5,7 @@
 		</view>
 		<view class="pic">
 			<view class="img">
-				<image src="../../public/bg.png" mode="aspectFill">
+				<image src="/public/bg.jpg" mode="aspectFill">
 				</image>
 				<view class="change">
 					<el-icon class="picicon"><Edit /></el-icon>
