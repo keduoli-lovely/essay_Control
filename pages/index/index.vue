@@ -8,7 +8,7 @@
 			
 			<view class="topbar-right">
 				<view class="user-pic">
-					<image src="../../public/bg.png" mode="aspectFill"></image>
+					<image src="../../public/bg.jpg" mode="aspectFill"></image>
 				</view>
 				<view class="user-name">
 					{{ rootname }}
