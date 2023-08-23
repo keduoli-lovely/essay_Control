@@ -9,6 +9,20 @@
 			<view class="topbar-right">
 				<view class="user-pic">
 					<image src="../../public/bg.jpg" mode="aspectFill"></image>
+					<view class="move">
+						<view class="list_move">
+							<el-icon class="move_icon"><User /></el-icon>个人资料
+						</view>
+						<view class="list_move">
+							<el-icon class="move_icon"><Notification /></el-icon>公告管理
+						</view>
+						<view class="list_move">
+							<el-icon class="move_icon"><Setting /></el-icon>设置
+						</view>
+						<view class="list_move">
+							<el-icon class="move_icon"><SwitchButton /></el-icon>退出登录
+						</view>
+					</view>
 				</view>
 				<view class="user-name">
 					{{ rootname }}
@@ -171,13 +185,49 @@
 				right: 0;
 				transform: translateY(-50%);
 				.user-pic {
+					transition: all .4s ease;
+					cursor: pointer;	
+					position: relative;
 					width: 90rpx;
 					height: 90rpx;
 					border-radius: 50%;
-					overflow: hidden;
 					image {
 						width: 100%;
 						height: 100%;
+						border-radius: 50%;
+					}
+					&:hover {
+						transform: translate(-60rpx, 50rpx) scale(1.8);
+					}
+					&:hover .move {
+						opacity: 1;
+					}
+					.move {
+						opacity: 0;
+						padding: 45rpx 0 20rpx 30rpx;
+						transition: all .3s linear;
+						position: absolute;
+						top: 65rpx;
+						z-index: -1;
+						left: -55rpx;
+						width: 200rpx;
+						background-color: #fff;
+						border-radius: 12rpx;
+						box-shadow: 4rpx 4rpx 20rpx rgba(0,0,0,.2);
+						.list_move {
+							transform: scale(.8) !important;
+							font-size: 24rpx;
+							margin-bottom: 10rpx;
+							.move_icon {
+								padding-bottom: 5rpx;
+								vertical-align: middle;
+								margin-right: 15rpx;
+								font-size: 24rpx;
+							}
+							&:hover {
+								color: skyblue;
+							}
+						}
 					}
 				}
 				.close {

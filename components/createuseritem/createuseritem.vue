@@ -5,7 +5,7 @@
 		</view>
 		<view class="pic">
 			<view class="img">
-				<image src="/public/bg.jpg" mode="aspectFill">
+				<image :src="baseUrl" mode="aspectFill">
 				</image>
 				<view class="change">
 					<el-icon class="picicon"><Edit /></el-icon>
@@ -55,6 +55,7 @@
 	import { pushnewuser } from '../../apis/pushnewuserdata.js'
 	import { bubble } from '../../store/bubblesta.js'
 	import { userdata } from '../../store/Usedata.js'
+	import { setting_pic } from '../../apis/setting_pic.js'
 	
 	// 获取用户数据 / 创建用户后重新获取用户数据
 	let { getuserdata } = userdata()
@@ -68,6 +69,7 @@
 	let sex = ref(2)
 	let age = ref('')
 	let sta = ref(false)
+	let baseUrl = ref('http://127.0.0.1:3000/default.png')
 	let createuser
 	
 	onMounted(() => {
@@ -83,7 +85,8 @@
 									account: acc.value,
 									password: pwd.value,
 									sex: sex.value,
-									age: age.value
+									age: age.value,
+									pic: baseUrl.value
 								})
 								if(res.data.code == 20020) {
 									keduoli('succeed', res.data.message)
@@ -94,6 +97,7 @@
 									pwd.value = ''
 									sex.value = 2
 									age.value = ''
+									baseUrl.value = 'http://127.0.0.1:3000/default.png'
 								}else {
 									keduoli('fail', res.data.message)
 								}
@@ -115,11 +119,52 @@
 				showtextfn('昵称的字数为2-8', el)
 			}
 		}
+		
+		// 选择创建用户头像
+		
+		let topel = document.querySelector(".img")
+				if(topel) {
+					let inp = document.createElement('input')
+					inp.type = 'file',
+					inp.accept = 'image/*',
+					inp.id = 'pic',
+					inp.style.cssText = `
+						position: absolute;
+						width: 100%;
+						height: 100%;
+						inset: 0;
+						opacity: 0;
+						font-size: 0;
+					`
+					inp.addEventListener("change", async (e) => {
+						let data = e.target.files[0]
+						if (data && data.type.startsWith("image/")) {
+							let formdata = new FormData()
+							formdata.append('pic', data)
+							
+							let res = await setting_pic(formdata)
+							
+							if(res.data.code == 20010) {
+								keduoli('succeed', res.data.message)
+								baseUrl.value = res.data.url
+							}
+						}
+					})
+					topel.appendChild(inp)
+				}
 	})
 	
 	let showtextfn = (font, ele) => {
 		sta.value = true
 		let span = createFn(font)
+		span.style.cssText = `
+			position: absolute;
+			bottom: -8px;
+			left: 28%;
+			color: red;
+			font-size: 14px;
+			transform: scale(.6);
+		`
 		ele.appendChild(span)
 		ele.childNodes[2].className = 'atv-create'
 		let timer = setTimeout(() => {
@@ -129,6 +174,7 @@
 			sta.value = false
 		}, 3000)
 	}
+		
 	
 
 </script>
@@ -169,11 +215,14 @@
 			width: 100%;
 			height: 100%;
 			.img {
+				background-color: rgba(0,0,0,.1);
+				border: 1rpx solid rgba(0,0,0,.1);
 				overflow: hidden;
 				position: relative;
 				width: 180rpx;
 				height: 180rpx;
 				border-radius: 20rpx;
+				cursor: pointer;
 				image {
 					width: 100%;
 					height: 100%;

@@ -16,14 +16,15 @@
 				<view class="item name_inp">
 					<el-icon class="icon">
 						<User />
-					</el-icon><input placeholder="请输入账号" type="text" v-model="user_name" id="user">
+					</el-icon>
+					<input placeholder="请输入账号" spellcheck="false" type="text" v-model="user_name" id="user">
 				</view>
 
 				<view class="item pwd_inp">
 					<el-icon class="icon">
 						<Lock />
 					</el-icon>
-					<input placeholder="请输入密码" :type="seeshow ? 'text' : 'password'" id="pwd" v-model="user_pwd">
+					<input placeholder="请输入密码" spellcheck="false" :type="seeshow ? 'text' : 'password'" id="pwd" v-model="user_pwd">
 					<view class="show_box" @click="seeshow = !seeshow">
 						<el-icon v-if="seeshow">
 							<View />
@@ -38,7 +39,7 @@
 					<el-icon class="icon">
 						<CollectionTag />
 					</el-icon>
-					<input placeholder="请输入验证码" type="text" v-model.number="user_dict" id="dict">
+					<input placeholder="请输入验证码" spellcheck="false" type="text" v-model.number="user_dict" id="dict">
 
 					<view class="dict" title="看不清,换一个" @click="changedict">
 						{{ dicttext }}
@@ -129,6 +130,14 @@
 	let createspan = (font, ele) => {
 		sta.value = true
 		let span = createFn(font)
+		span.style.cssText = `
+			position: absolute;
+			bottom: -20px;
+			left: 0;
+			color: red;
+			font-size: 18px;
+			transform: scale(.6);
+		`
 		ele.appendChild(span)
 		ele.childNodes[2].className = 'atv-create'
 		let timer = setTimeout(() => {
