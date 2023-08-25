@@ -24,7 +24,15 @@
 				<view class="block" :style="{left: left + 'rpx'}"></view>
 				
 				<view class="search" v-show="navindex ===  0">
-					<input type="text" id="search" placeholder="搜索">
+					<input type="text" @input="search_fn" @focus="search_focus" @blur="search_blur" id="search" v-model="search_text" placeholder="搜索">
+					<view class="tips" v-if="search_is_show">
+						<view class="tips_row" @click="todetail" v-for="(item, i) in filter_search_value" :key="item._id">
+							&nbsp;&nbsp;&nbsp;&nbsp;{{ item.title }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</view>
+						<view class="tips_row">
+							&nbsp;&nbsp;&nbsp;&nbsp;搜索:‘{{ search_text }}’&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</view>
+					</view>
 				</view>
 			</view>
 		</el-card>
@@ -73,6 +81,11 @@
 	<notification
 		:datatc="datatc"
 	></notification>
+	
+	<PopUps
+		:essay_list="filter_search_value"
+		:title="search_text"
+	 ></PopUps>
 </template>
 
 <script setup>
@@ -89,6 +102,7 @@
 	import { storeToRefs } from 'pinia'
 	import { userdata } from '../../../store/Usedata.js'
 	import { otherdata } from '../../../store/otherData.js' 
+	import PopUps from '../../../components/Pop_ups_search/Pop_ups_search.vue'
 	
 
 	// 文章页面的方法区分
@@ -144,12 +158,14 @@
    
 	// 弹窗数据
 	let datatc = ref({})
-	let { essaytcstate } = storeToRefs(maskstate())
+	let { essaytcstate, search_pop } = storeToRefs(maskstate())
 	let changedata = (data) => {
 		essaytcstate.value = true
 		datatc.value = data
 	}
-	
+	let todetail = () => {
+		search_pop.value = true
+	}
 
 	let addindex = (i) => {
 		page_index.value = i
@@ -163,16 +179,49 @@
 		setTimeout(() => {
 			rotate.value = false
 		}, 3000)
-		
-		
+	}
+	
+	// 搜索相关
+	let search_is_show = ref(false)
+	let search_text = ref('')
+	let filter_search_value = ref([])
+	let search_fn = () => {
+		let tmp_array = []
+		if(!search_text.value) {
+			search_is_show.value = false
+			filter_search_value.value = []
+		}else {
+			search_is_show.value = true
+		}
+		for (let i in essaydata.value) {
+			let tmp = essaydata.value[i]
+			if(tmp.title.includes(search_text.value) || tmp.text[0].includes(search_text)) {
+				tmp_array.push(tmp)
+			}
+		}
+		filter_search_value.value = tmp_array.splice(0, 6)
+	}
+	
+	let search_focus = () => {
+		if(search_text.value) {
+			search_is_show.value = true
+		}
+	}
+	let search_blur = () => {
+		let timer = setTimeout(() => {
+			search_is_show.value = false
+			clearTimeout(timer)
+		}, 1000)
 	}
 </script>
 
 <style lang="scss" scoped>
 	.essay {
 		.box {
+			overflow: inherit;
 			margin-bottom: 40rpx;
 			.nav {
+				z-index: 10;
 				position: relative;
 				width: 100%;
 				display: flex;
@@ -229,10 +278,34 @@
 					width: 400rpx;
 					transform: translateY(-50%);
 					border-bottom: 1rpx solid rgba(0,0,0,.3);
+					.tips {
+						position: absolute;
+						top: 80rpx;
+						right: 5rpx;
+						width: 400rpx;
+						background-color: #fff;
+						border-radius: 5rpx;
+						box-shadow: 4rpx 4rpx 15rpx rgba(0,0,0,.3);
+						font-size: 24rpx;
+						color: rgba(0,0,0,.7);
+						.tips_row {
+							width: 100%;
+							cursor: pointer;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							padding: 15rpx 0;
+							&:hover {
+								color: #000;
+								background-color: #B2DFDB;
+							}
+						}
+					}
 				}
 			}
 		}
 		
 	}
+	
 	
 </style>
