@@ -155,10 +155,13 @@
 	}
 	
 	let back = () => {
-		uni.removeStorageSync('root')
-		uni.reLaunch({
-			url: '/pages/admin/admin'
-		})
+		let sta = confirm('你确定要退出吗？？？')
+		if(sta) {
+			uni.removeStorageSync('root')
+			uni.reLaunch({
+				url: '/pages/admin/admin'
+			})
+		}
 	}
 
 </script>
@@ -201,14 +204,16 @@
 					}
 					&:hover .move {
 						opacity: 1;
+						display: block;
 					}
 					.move {
+						z-index: -1;
+						display: none;
 						opacity: 0;
 						padding: 45rpx 0 20rpx 30rpx;
 						transition: all .3s linear;
 						position: absolute;
 						top: 65rpx;
-						z-index: -1;
 						left: -55rpx;
 						width: 200rpx;
 						background-color: #fff;
