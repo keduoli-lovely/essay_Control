@@ -11,6 +11,7 @@ export const maskstate = defineStore('mask', () => {
 	
 	// essay
 	let essay_choice = ref(false)
+	let search_pop = ref(false)
 	
 	return {
 		essaytcstate,
@@ -20,6 +21,7 @@ export const maskstate = defineStore('mask', () => {
 		tckstate,
 		createuserstate,
 		// essay
-		essay_choice
+		essay_choice,
+		search_pop
 	}
 })
