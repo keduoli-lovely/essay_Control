@@ -1,5 +1,5 @@
 <template>
-	<view class="index">
+	<view class="index" :class="night ? 'night' : 'daytime'">
 		<!-- // 顶栏 -->
 		<view class="topbar">
 			<view class="topbar-left">
@@ -19,7 +19,7 @@
 						<view class="list_move">
 							<el-icon class="move_icon"><Setting /></el-icon>设置
 						</view>
-						<view class="list_move">
+						<view class="list_move" @click="back">
 							<el-icon class="move_icon"><SwitchButton /></el-icon>退出登录
 						</view>
 					</view>
@@ -32,7 +32,11 @@
 					退出登录
 				</view>
 				
-				<view class="setting">
+				<view class="chnagecolor" @click="changecolor_night" style="margin-right: 40rpx;">
+					{{ night_daytime }}
+				</view>
+				
+				<view class="setting" style="margin-right: 40rpx;">
 					设置
 				</view>
 				
@@ -102,7 +106,7 @@
 </template>
 
 <script setup>
-	import { ref, onMounted } from 'vue'
+	import { ref, onMounted, computed } from 'vue'
 	import home from './components/home.vue'
 	import essay from './components/essay.vue'
 	import publish from './components/publish.vue'
@@ -110,7 +114,22 @@
 	import user from './components/userpage.vue'
 	import { onLoad } from '@dcloudio/uni-app'
 	import { userdata } from '../../store/Usedata.js'
+	import { changeColor} from '@/store/changeColor_night.js'
+	import { storeToRefs } from 'pinia'
 	
+	
+	// 黑夜与白天的切换
+	let { night } = storeToRefs(changeColor())
+	let changecolor_night = () => {
+		night.value = !night.value
+	}
+	let night_daytime = computed(() => {
+		if(night.value) {
+			return '黑夜'
+		}else {
+			return '白天'
+		}
+	})
 	// 获取必要数据
 	onMounted(() => {
 		let token = uni.getStorageSync('root').token
@@ -177,16 +196,17 @@
 			position: relative;
 			width: 100%;
 			height: 8%;
-			background-color: #fff;
-			box-shadow: 4rpx 4rpx 15rpx rgba(0,0,0,.2);
+			background-color: var(--index_header_tarbar);
+			box-shadow: 4rpx 4rpx 15rpx var(--index_tarbar_shadow);
 			.topbar-right {
 				display: flex;
 				align-items: center;
-				width: 520rpx;
+				width: auto;
 				position: absolute;
 				top: 50%;
 				right: 0;
 				transform: translateY(-50%);
+				color: var(--index_tarbar_font);
 				.user-pic {
 					transition: all .4s ease;
 					cursor: pointer;	
@@ -235,7 +255,8 @@
 						}
 					}
 				}
-				.close {
+				.close,
+				.chnagecolor {
 					cursor: pointer;
 					&:hover {
 					color: red;
@@ -259,18 +280,19 @@
 				position: relative;
 				padding: 100rpx 0 100rpx;
 				height: 100%;
-				background-color: #FAFAFA;
+				background-color: var(--index_nav-bg);
 				transition: all .4s ease;
 				color: #B2EBF2;
+				box-shadow: 10rpx 10rpx 40rpx var(--index_nav_shadow);
 				.nav-btn {
 					cursor: pointer;
 					position: absolute;
-					width: 40rpx;
+					width: 80rpx;
 					height: 40rpx;
 					font-size: 50rpx;
 					
 					top: 25rpx;
-					right: 42rpx;
+					right: 20rpx;
 				}
 				.item {
 					transition: all .4s ease;
@@ -292,7 +314,7 @@
 				}
 				.atv {
 					color: #fff;
-					background-color: skyblue;
+					background-color: var(--index_nav_atv);
 				}
 				.minsty {
 					padding: 26rpx 0;
@@ -306,7 +328,7 @@
 				margin-left: 1rpx;
 				width: 100%;
 				height: 100%;
-				background-color: #F5F5F5;
+				background-color: var(--index_bg);
 			}
 		}
 		

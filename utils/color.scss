@@ -1,0 +1,98 @@
+.night {
+	// index
+	--index_bg: #4D4D4D;
+	--index_nav-bg: #1F1F1F;
+	--index_header_tarbar: #1F1F1F;
+		// shadow
+		--index_nav_shadow: #ffffff10;
+		--index_tarbar_shadow: #ffffff10;
+		// font
+		--index_tarbar_font: #fff;
+		
+	--index_nav_atv: #76B6EA40;
+	//home
+	--home_card_bg: #5F5F5F;
+	--home_numnav_item: #D8D8D8;
+		// font
+		--home_card_font: #E9E9F3;
+	// user
+	--user_nav_bg: #808080;
+		// font
+		--user_nav_font: #fff;
+	
+	// essay
+	--essay_bg: #868686;
+	--essay_pop_bg: #4d4d4d;
+	--essay_not_bg: #5F5F5F;
+	--essay_hover_bg: #ffffff40;
+		// font
+		--essay_font: #fff;
+		--essay_other_font: #ffffff99;
+		--essay_tips_font: #ffffffb2;
+		--essay_tips_bg: #5f5f5f;
+		--essay_pop_font: #fff;
+		--essayitem_font: #ffffff99;
+		--essay_icon_color: #ffffff7f;
+		--essay_btn_bg: #3F3F3F;
+		--essay_info_font: #ffffff66;
+		// border
+		--essay_border: #ffffff4c;
+		--essay_pop_border: #ffffff19;
+		--essay_show_border: #ffffff33;
+		// shadow
+		--essay_btn_shadow: #ffffff19;
+		--essay_not_shadow: #ffffff16;
+	
+	// push
+	--push_content_title: #000;
+}
+
+.daytime {
+	// index
+	--index_bg: #f5f5f5;
+	--index_nav-bg: #FAFAFA;
+	--index_header_tarbar: #fff;
+		// shadow
+		--index_nav_shadow: #00000015;
+		--index_tarbar_shadow: #00000015;
+		// font
+		--index_tarbar_font: #000;
+	
+	--index_nav_atv: skyblue;
+	// home
+	--home_card_bg: #fff;
+	--home_numnav_item: #fff;
+		// font
+		--home_card_font: #000;
+	
+	// user
+	--user_nav_bg: #fff;
+		// font
+		--user_nav_font: #000;
+	
+	// essay
+	--essay_bg: #fff;
+	--essay_pop_bg: #fff;
+	--essay_not_bg: #fff;
+	--essay_hover_bg: #E0F7FA;
+		//font
+		--essay_font: #000;
+		--essay_other_font: #00000099;
+		--essay_tips_font: #000000b2;
+		--essay_tips_bg: #fff;
+		--essay_pop_font: #000;
+		--essayitem_font: #757575;
+		--essay_icon_color: #0000007f;
+		--essay_btn_bg: #fff;
+		--essay_info_font: #00000066;
+		// border
+		--essay_border: #0000004c;
+		--essay_pop_border: #00000019;
+		--essay_show_border: #00000033;
+		// shadow
+		--essay_btn_shadow: #00000019;
+		--essay_not_shadow: #00000036;
+	
+	// push
+	--push_content_title: #fff;
+}

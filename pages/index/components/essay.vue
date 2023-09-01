@@ -1,5 +1,5 @@
 <template>
-	<view class="essay">
+	<view class="essay" :class="night ? 'night' : 'daytime'">
 		<el-card class="box">
 			<view class="nav">
 				<view class="allessay item" @click="addindex(0)">
@@ -24,7 +24,7 @@
 				<view class="block" :style="{left: left + 'rpx'}"></view>
 				
 				<view class="search" v-show="navindex ===  0">
-					<input type="text" @input="search_fn" @focus="search_focus" @blur="search_blur" id="search" v-model="search_text" placeholder="搜索">
+					<input type="text" @input="search_fn" @focus="search_focus" @blur="search_blur" id="search" v-model="search_text" placeholder-style="color: var(--essay_other_font)" placeholder="搜索">
 					<view class="tips" v-if="search_is_show">
 						<view class="tips_row" @click="todetail" v-for="(item, i) in filter_search_value" :key="item._id">
 							&nbsp;&nbsp;&nbsp;&nbsp;{{ item.title }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -36,7 +36,7 @@
 				</view>
 			</view>
 		</el-card>
-		<el-card class="box2" v-if="decision">
+		<el-card class="box2" v-if="decision" body-style="background-color: var(--essay_bg)">
 			<listItem
 				v-show="navindex === 0"
 				v-for="(item, i) in essaydata" :key="i"
@@ -103,8 +103,12 @@
 	import { userdata } from '../../../store/Usedata.js'
 	import { otherdata } from '../../../store/otherData.js' 
 	import PopUps from '../../../components/Pop_ups_search/Pop_ups_search.vue'
+	import { changeColor } from '@/store/changeColor_night.js'
 	
 
+
+	// 黑夜与白天
+	let { night } = storeToRefs(changeColor())
 	// 文章页面的方法区分
 	let { page_index, tipsText } = storeToRefs(otherdata())
 	// 文章数据
@@ -220,6 +224,8 @@
 		.box {
 			overflow: inherit;
 			margin-bottom: 40rpx;
+			background-color: var(--essay_bg);
+			color: var(--essay_font);
 			.nav {
 				z-index: 10;
 				position: relative;
@@ -277,17 +283,17 @@
 					right: 0;
 					width: 400rpx;
 					transform: translateY(-50%);
-					border-bottom: 1rpx solid rgba(0,0,0,.3);
+					border-bottom: 1rpx solid var(--essay_border);
 					.tips {
 						position: absolute;
 						top: 80rpx;
 						right: 5rpx;
 						width: 400rpx;
-						background-color: #fff;
+						background-color: var(--essay_tips_bg);
 						border-radius: 5rpx;
-						box-shadow: 4rpx 4rpx 15rpx rgba(0,0,0,.3);
+						box-shadow: 4rpx 4rpx 15rpx var(--essay_border);
 						font-size: 24rpx;
-						color: rgba(0,0,0,.7);
+						color: var(--essay_tips_font);
 						.tips_row {
 							width: 100%;
 							cursor: pointer;

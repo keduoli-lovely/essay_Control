@@ -1,5 +1,5 @@
 <template>
-	<view class="item">
+	<view class="item" :class="night ? 'night' : 'daytime'">
 		<view class="title">
 			{{ essaylist.title }}
 		</view>
@@ -42,8 +42,10 @@
 	import { maskstate } from '../../store/maskstare.js'
 	import { otherdata } from '../../store/otherData.js'
 	import { storeToRefs } from 'pinia'
+	import { changeColor } from '@/store/changeColor_night.js'
 	
-	
+	// 黑夜与白天
+	let { night } = storeToRefs(changeColor())
 	let sta_two = ref(true)
 	let { essay_choice } = storeToRefs(maskstate())
 	let { listitem_id, page_index, tipsText, only_index } = storeToRefs(otherdata())
@@ -111,9 +113,9 @@
 	margin-bottom: 24rpx;
 	display: flex;
 	align-items: center;
-	color: rgba(0,0,0,.6);
+	color: var(--essay_other_font);
 	.title {
-		color: #000;
+		color: var(--essay_font);
 		padding-right: 100rpx;
 		width: 240rpx;
 		text-overflow: ellipsis;
@@ -151,8 +153,8 @@
 		font-size: 24rpx;
 		.show {
 			cursor: pointer;
-			padding: 0 3rpx 4rpx;
-			border-bottom: 1rpx solid rgba(0,0,0,.3);
+			padding: 0 3rpx 5rpx;
+			border-bottom: 1rpx solid var(--essay_show_border);
 			margin-right: 40rpx;
 			&:hover {
 				color: red;
@@ -162,8 +164,8 @@
 		.del {
 			position: relative;
 			cursor: pointer;
-			padding: 0 3rpx 4rpx;
-			border-bottom: 1rpx solid rgba(0,0,0,.3);
+			padding: 0 3rpx 5rpx;
+			border-bottom: 1rpx solid var(--essay_show_border);
 			margin-left: 40rpx;
 			&:hover {
 				color: red;

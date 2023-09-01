@@ -1,5 +1,5 @@
 <template>
-	<view class="select">
+	<view class="select" :class="night ? 'night' : 'daytime'">
 		<view @click="createuserstate = true" class="item-sel">新增用户</view>
 		<view class="item-sel" @click="changechoose">
 			{{ statetext }}
@@ -59,8 +59,11 @@
 	import { storeToRefs } from 'pinia'
 	import { ref, computed } from 'vue'
 	import { bubble as bubblesta } from '../../../store/bubblesta.js'
+	import { changeColor } from '@/store/changeColor_night.js'
 	
 	
+	// 黑夜与白天
+	let { night } = storeToRefs(changeColor())
 	let { keduoli } = bubblesta()
 	// 用户数据列表
 	let userrowid = ref('')
@@ -157,7 +160,8 @@
 		.item-sel {
 			cursor: pointer;			
 			padding: 20rpx 40rpx;
-			background-color: #fff;
+			background-color: var(--user_nav_bg);
+			color: var(--user_nav_font);
 			margin-right: 30rpx;
 			border-radius: 8rpx;
 			box-shadow: 1rpx 1rpx 5rpx rgba(0,0,0,.1);

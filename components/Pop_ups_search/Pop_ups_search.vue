@@ -1,5 +1,5 @@
 <template>
-	<view class="pop" :class="search_pop ? 'atv_pop' : ''">
+	<view class="pop" :class="[search_pop ? 'atv_pop' : '', night ? 'night' : 'daytime']">
 		<view class="title">
 			搜索相关: <span class="text">''&nbsp;{{ title }}&nbsp;''</span>
 		</view>
@@ -25,7 +25,12 @@
 	import essayItem from '../../pages/index/components/essayItem.vue'
 	import { maskstate } from '../../store/maskstare.js'
 	import { storeToRefs } from 'pinia'
-
+	import { chnageColor } from '@/store/changeColor_night.js'
+	
+	
+	
+	// 黑夜与白天
+	let { night } = storeToRefs(changeColor())
 	let props = defineProps({
 		essay_list: Array,
 		title: String
@@ -51,13 +56,14 @@
 	right: -100%;
 	width: 60%;
 	height: 90%;
-	background-color: #fff;
+	background-color: var(--essay_pop_bg);
 	.title {
 		font-size: 50rpx;
 		font-weight: 550;
 		font-family: 'Times New Roman', Times, serif;
 		padding-bottom: 20rpx;
-		border-bottom: 1rpx solid rgba(0,0,0,.1);
+		border-bottom: 1rpx solid var(--essay_pop_border);
+		color: var(--essay_pop_font);
 		.text {
 			color: skyblue;
 			font-weight: 400;
@@ -78,11 +84,12 @@
 		width: 160rpx;
 		height: 60rpx;
 		line-height: 60rpx;
-		background-color: #fff;
-		box-shadow: 4rpx 4rpx 20rpx rgba(0,0,0,.1);
+		color: var(--essay_pop_font);
+		background-color: var(--essay_btn_bg);
+		box-shadow: 4rpx 4rpx 20rpx var(--essay_btn_shadow);
 		border-radius: 4rpx;
 		&:hover {
-			background-color: rgba(0,0,0,.1);
+			background-color: var(--essay_btn_shadow);
 		}
 	}
 	.close_icon {
@@ -91,7 +98,7 @@
 		top: 45rpx;
 		right: 80rpx;
 		font-size: 50rpx;
-		color: rgba(0,0,0,.5);
+		color: var(--essay_icon_color);
 		&:hover {
 			color: skyblue;
 		}

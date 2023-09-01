@@ -263,7 +263,8 @@
 		.card {
 			width: 28%;
 			font-size: 26rpx;
-
+			background-color: var(--home_card_bg);
+			color: var(--home_card_font);
 			.userinfo {
 				border-bottom: 1rpx solid #999;
 				margin-bottom: 40rpx;
@@ -304,7 +305,7 @@
 			padding-top: 40rpx;
 			width: 70%;
 			height: 320rpx;
-
+			background-color: var(--home_card_bg);
 			.navview {
 				display: flex;
 				justify-content: space-between;
@@ -313,7 +314,7 @@
 					display: flex;
 					width: 22%;
 					height: 160rpx;
-					background-color: #fff;
+					background-color: var(--home_numnav_item);
 					border-radius: 14rpx;
 					overflow: hidden;
 					box-shadow: 2rpx 2rpx 10rpx rgba(0, 0, 0, .1);
@@ -363,7 +364,7 @@
 
 			.card3 {
 				padding-left: 20rpx;
-
+				background-color: var(--home_card_bg);
 				.toptext {
 					font-size: 34rpx;
 					color: orangered;
@@ -423,6 +424,7 @@
 			width: 70%;
 
 			.card4 {
+				background-color: var(--home_card_bg);
 				width: 100%;
 				height: 650rpx;
 			}

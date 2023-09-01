@@ -83,7 +83,8 @@
 		align-items: center;
 		width: 100%;
 		height: 115rpx;
-		background-color: #E0F7FA;
+		// background-color: #E0F7FA;
+		background-color: #F0FFFF;
 		.name,
 		.sex {
 			text-align: center;

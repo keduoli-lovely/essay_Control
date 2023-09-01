@@ -69,19 +69,20 @@
 	transform: translate(-50%, -50%);
 	width: 60%;
 	height: 80%;
-	background-color: #fff;
+	background-color: var(--essay_not_bg);
 	border-radius: 14rpx;
-	box-shadow: 10rpx 10rpx 40rpx rgba(0,0,0,.4);
+	box-shadow: 10rpx 10rpx 20rpx var(--essay_not_shadow);
 	text-align: center;
 	.title {
 		margin-bottom: 20rpx;
 		font-size: 80rpx;
+		color: var(--essay_pop_font);
 	}
 	.userinfo {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		color: rgba(0,0,0,.4);
+		color: var(--essay_info_font);
 		margin-bottom: 20rpx;
 		font-size: 34rpx;
 		.name {
@@ -90,6 +91,7 @@
 	}
 	.text {
 		margin-bottom: 40rpx;
+		color: var(--essay_pop_font);
 	}
 	.pic {
 		display: flex;
@@ -111,7 +113,9 @@
 		height: 80rpx;
 		line-height: 80rpx;
 		border-radius: 14rpx;
-		box-shadow: 4rpx 4rpx 10rpx rgba(0,0,0,.4);
+		color: var(--essay_pop_font);
+		background-color: var(--essay_btn_bg);
+		box-shadow: 4rpx 4rpx 10rpx var(--essay_info_font);
 	}
 	.btn-icon {
 		cursor: pointer;
@@ -119,6 +123,7 @@
 		top: 35rpx;
 		right: 35rpx;
 		font-size: 45rpx;
+		color: var(--essay_pop_font);
 		.icon {
 			&:hover {
 				color: skyblue;

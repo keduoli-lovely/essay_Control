@@ -21,9 +21,9 @@
 		padding: 20rpx 0;
 		display: flex;
 		align-items: center;
-		color: #757575;
+		color: var(--essayitem_font);
 		&:hover {
-			background-color: #E0F7FA;
+			background-color: var(--essay_hover_bg);
 		}
 		&:last-child {
 			margin-bottom: 60rpx;
@@ -46,7 +46,7 @@
 			cursor: pointer;
 			flex: 1;
 			font-size: 26rpx;
-			color: rgba(0,0,0,.6);
+			color: var(--essay_pop_font);
 			&:hover {
 				color: red;
 			}
