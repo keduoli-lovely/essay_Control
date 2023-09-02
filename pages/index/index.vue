@@ -32,7 +32,7 @@
 					退出登录
 				</view>
 				
-				<view class="chnagecolor" @click="changecolor_night" style="margin-right: 40rpx;">
+				<view class="change_btn_off" @click="changecolor_night" style="margin-right: 40rpx;">
 					{{ night_daytime }}
 				</view>
 				
@@ -256,7 +256,7 @@
 					}
 				}
 				.close,
-				.chnagecolor {
+				.change_btn_off {
 					cursor: pointer;
 					&:hover {
 					color: red;

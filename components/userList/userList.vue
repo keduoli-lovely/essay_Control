@@ -83,8 +83,6 @@
 		align-items: center;
 		width: 100%;
 		height: 115rpx;
-		// background-color: #E0F7FA;
-		background-color: #F0FFFF;
 		.name,
 		.sex {
 			text-align: center;
@@ -136,10 +134,10 @@
 				border: 2rpx solid #e0e0e0;
 			}
 			.edit {
-				background-color: #9CCC65;
+				background-color: var(--user_btn_yes);
 			}
 			.del {
-				background-color: #EF5350;
+				background-color: var(--user_btn_no);
 			}
 		}
 		

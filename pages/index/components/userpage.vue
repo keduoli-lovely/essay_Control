@@ -208,10 +208,10 @@
 		
 	}
 	
-	::v-deep .list:nth-child(1n) {
-		background-color: #E0F7FA;
+	::v-deep .list:nth-child(even) {
+		background-color: skyblue;
 	}
-	::v-deep .list:nth-child(2n) {
-		background-color: #E8F5E9;
+	::v-deep .list:nth-child(odd) {
+		background-color: var(--user_item_row);
 	}
 </style>

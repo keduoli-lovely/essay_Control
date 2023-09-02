@@ -25,7 +25,7 @@
 	import essayItem from '../../pages/index/components/essayItem.vue'
 	import { maskstate } from '../../store/maskstare.js'
 	import { storeToRefs } from 'pinia'
-	import { chnageColor } from '@/store/changeColor_night.js'
+	import { changeColor } from '@/store/changeColor_night.js'
 	
 	
 	

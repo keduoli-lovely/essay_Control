@@ -1,5 +1,5 @@
 <template>
-	<el-card>
+	<el-card class="card1">
 		<view class="push" :class="night ? 'night' : 'daytime'">
 			<view class="title">
 				<span class="text">标题:</span> <input type="text" name="title" id="title">
@@ -103,6 +103,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.card1 {
+		background-color: #616161;
+	}
 	.push {
 		padding: 60rpx 120rpx;
 		.title {
