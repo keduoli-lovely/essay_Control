@@ -20,16 +20,16 @@
 		
 		<view class="move">
 			<view class="show" @click="showtc">
-				{{ select1 }}
+				{{ showview }}
 			</view>
 			
 			<view class="del" @click="choice">
-				{{ select2 }}
+				{{ deleteview }}
 				
 			</view>
 			
-			<view class="del" @click="innocent" v-if="select2 == '确认违规'">
-				没有违规
+			<view class="del" @click="innocent" v-if="select2 == '确认违规' || select2 ==  'Affirm err'">
+				{{ lang["ESSAY_LIST_NOVIOLATION"] }}
 				
 			</view>
 		</view>
@@ -43,7 +43,11 @@
 	import { otherdata } from '../../store/otherData.js'
 	import { storeToRefs } from 'pinia'
 	import { changeColor } from '@/store/changeColor_night.js'
+	import { lang_sel } from '@/store/lang_selec.js'
 	
+	
+	// 语言切换
+	let { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天
 	let { night } = storeToRefs(changeColor())
 	let sta_two = ref(true)
@@ -55,12 +59,18 @@
 		essaylist: Object,
 		select1: {
 			type: String,
-			default: '查看详情'
+			default: '1'
 		},
 		select2: {
 			type: String,
-			default: '删除文章'
+			default: '2'
 		}
+	})
+	let showview = computed(() => {
+		return props.select1 === '1' ? lang.value["ESSAY_LIST_SEE"] : props.select1
+	})
+	let deleteview = computed(() => {
+		return props.select2 === '2' ? lang.value["ESSAY_LIST_DELETE"] : props.select2
 	})
 	let pushtime = computed(() => {
 		return dayjs(props.essaylist.time).format('YYYY-MM-DD')

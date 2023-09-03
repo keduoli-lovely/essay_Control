@@ -3,40 +3,40 @@
 		<el-card class="box">
 			<view class="nav">
 				<view class="allessay item" @click="addindex(0)">
-					全部
+					{{ lang["ESSAY_NAV_ROW1"] }}
 				</view>
 				<view class="toexamine item" @click="addindex(1)">
-					待审核
+					{{ lang["ESSAY_NAV_ROW2"] }}
 				</view>
 
 				<view class="pass item" @click="addindex(2)">
-					审核通过
+					{{ lang["ESSAY_NAV_ROW3"] }}
 				</view>
 
 				<view class="report item" @click="addindex(3)">
-					举报
+					{{ lang["ESSAY_NAV_ROW4"] }}
 				</view>
 				
 				<view class="logding item" @click="logding">
-					<el-icon class="logding-icon" :class="rotate ? 'amin' : ''"><Refresh /></el-icon>刷新
+					<el-icon class="logding-icon" :class="rotate ? 'amin' : ''"><Refresh /></el-icon>{{ lang["ESSAY_NAV_ROW5"] }}
 				</view>
 
 				<view class="block" :style="{left: left + 'rpx'}"></view>
 				
 				<view class="search" v-show="navindex ===  0">
-					<input type="text" @input="search_fn" @focus="search_focus" @blur="search_blur" id="search" v-model="search_text" placeholder-style="color: var(--essay_other_font)" placeholder="搜索">
+					<input type="text" @input="search_fn" @focus="search_focus" @blur="search_blur" id="search" v-model="search_text" placeholder-style="color: var(--essay_other_font)" :placeholder="lang['ESSAY_SEARCH']">
 					<view class="tips" v-if="search_is_show">
 						<view class="tips_row" @click="todetail" v-for="(item, i) in filter_search_value" :key="item._id">
 							&nbsp;&nbsp;&nbsp;&nbsp;{{ item.title }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</view>
 						<view class="tips_row">
-							&nbsp;&nbsp;&nbsp;&nbsp;搜索:‘{{ search_text }}’&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;{{ lang['ESSAY_SEARCH'] }}:‘{{ search_text }}’&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</view>
 					</view>
 				</view>
 			</view>
 		</el-card>
-		<el-card class="box2" v-if="decision" body-style="background-color: var(--essay_bg)">
+		<el-card class="box2" v-if="decision" body-style="background-color: var(--essay_bg); overflow: auto;">
 			<listItem
 				v-show="navindex === 0"
 				v-for="(item, i) in essaydata" :key="i"
@@ -49,7 +49,7 @@
 				v-show="navindex === 1"
 				v-for="(item, i) in review" :key="i"
 				:essaylist="item"
-				:select2="'通过审核'"
+				:select2="lang['ESSAY_LIST_PASS']"
 				@datatcFn="changedata(item)"
 			></listItem>
 			
@@ -58,7 +58,7 @@
 				v-show="navindex === 2"
 				v-for="(item, i) in backreview" :key="i"
 				:essaylist="item"
-				:select2="'重新审核'"
+				:select2="lang['ESSAY_LIST_REBOOT']"
 				@datatcFn="changedata(item)"
 			></listItem>
 			
@@ -67,7 +67,7 @@
 				v-show="navindex === 3"
 				v-for="(item, i) in report" :key="i"
 				:essaylist="item"
-				:select2="'确认违规'"
+				:select2="lang['ESSAY_LIST_VIOLATION']"
 				@datatcFn="changedata(item)"
 			></listItem>
 		</el-card>
@@ -104,9 +104,11 @@
 	import { otherdata } from '../../../store/otherData.js' 
 	import PopUps from '../../../components/Pop_ups_search/Pop_ups_search.vue'
 	import { changeColor } from '@/store/changeColor_night.js'
+	import { lang_sel } from '@/store/lang_selec.js'
 	
 
-
+	// 语言切换
+	let { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天
 	let { night } = storeToRefs(changeColor())
 	// 文章页面的方法区分

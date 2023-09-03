@@ -11,16 +11,16 @@
 					<image src="../../public/bg.jpg" mode="aspectFill"></image>
 					<view class="move">
 						<view class="list_move">
-							<el-icon class="move_icon"><User /></el-icon>个人资料
+							<el-icon class="move_icon"><User /></el-icon>{{ lang["INDEX_TARBAT_INFO_ROW1"] }}
 						</view>
 						<view class="list_move">
-							<el-icon class="move_icon"><Notification /></el-icon>公告管理
+							<el-icon class="move_icon"><Notification /></el-icon>{{ lang["INDEX_TARBAT_INFO_ROW2"] }}
 						</view>
 						<view class="list_move">
-							<el-icon class="move_icon"><Setting /></el-icon>设置
+							<el-icon class="move_icon"><Setting /></el-icon>{{ lang["INDEX_TARBAT_INFO_ROW3"] }}
 						</view>
 						<view class="list_move" @click="back">
-							<el-icon class="move_icon"><SwitchButton /></el-icon>退出登录
+							<el-icon class="move_icon"><SwitchButton /></el-icon>{{ lang["INDEX_TARBAT_INFO_ROW4"] }}
 						</view>
 					</view>
 				</view>
@@ -29,7 +29,7 @@
 				</view>
 				
 				<view class="close" @click="back" style="margin: 0 40rpx;">
-					退出登录
+					{{ lang["INDEX_TARBAT_OUT"] }}
 				</view>
 				
 				<view class="change_btn_off" @click="changecolor_night" style="margin-right: 40rpx;">
@@ -37,7 +37,7 @@
 				</view>
 				
 				<view class="setting" style="margin-right: 40rpx;">
-					设置
+					{{ lang["INDEX_TARBAT_SETTING"] }}
 				</view>
 				
 			</view>
@@ -55,40 +55,40 @@
 					:class="[ismin ? 'minsty' : '',pageindex == 1 ? 'atv' : '']"
 					@click="pageindex = 1"
 				>
-					<el-icon class="icon" title="主页"><HomeFilled /></el-icon>
-					<text v-if="!ismin">主页</text>
+					<el-icon class="icon" v-title="lang['INDEX_NAV_ROW1']"><HomeFilled /></el-icon>
+					<text v-if="!ismin">{{ lang["INDEX_NAV_ROW1"] }}</text>
 				</view>
 				
 				<view class="essay item" 
 					:class="[ismin ? 'minsty' : '', pageindex == 2 ? 'atv' : '']"
 					@click="pageindex = 2"
 				>
-					<el-icon class="icon" title="文章"><Tickets /></el-icon>
-					<text v-if="!ismin">所有文章</text>
+					<el-icon class="icon" v-title="lang['INDEX_NAV_ROW2']"><Tickets /></el-icon>
+					<text v-if="!ismin">{{ lang["INDEX_NAV_ROW2"] }}</text>
 				</view>
 				
 				<view class="essay item"
 					:class="[ismin ? 'minsty' : '', pageindex == 3 ? 'atv' : '']"
 					@click="pageindex = 3"
 				>
-					<el-icon class="icon" title="用户"><UserFilled /></el-icon>
-					<text v-if="!ismin">用户</text>
+					<el-icon class="icon" v-title="lang['INDEX_NAV_ROW3']"><UserFilled /></el-icon>
+					<text v-if="!ismin">{{ lang["INDEX_NAV_ROW3"] }}</text>
 				</view>
 				
 				<view class="send item" 
 					:class="[ismin ? 'minsty' : '', pageindex == 4 ? 'atv' : '']" 
 					@click="pageindex = 4"
 				>
-					<el-icon class="icon" title="公告"><Promotion /></el-icon>
-					<text v-if="!ismin">发布公告</text>
+					<el-icon class="icon" v-title="lang['INDEX_NAV_ROW4']"><Promotion /></el-icon>
+					<text v-if="!ismin">{{ lang["INDEX_NAV_ROW4"] }}</text>
 				</view>
 				
 				<view class="oter item" 
 					:class="[ismin ? 'minsty' : '', pageindex == 5 ? 'atv' : '']" 
 					@click="pageindex = 5"
 				>
-					<el-icon class="icon" title="其他"><Operation /></el-icon>
-					<text v-if="!ismin">其他</text>
+					<el-icon class="icon" v-title="lang['INDEX_NAV_ROW5']"><Operation /></el-icon>
+					<text v-if="!ismin">{{ lang["INDEX_NAV_ROW5"] }}</text>
 				</view>
 			</view>
 			
@@ -106,6 +106,7 @@
 </template>
 
 <script setup>
+	import { en } from '@/lang/english.js'
 	import { ref, onMounted, computed } from 'vue'
 	import home from './components/home.vue'
 	import essay from './components/essay.vue'
@@ -116,8 +117,10 @@
 	import { userdata } from '../../store/Usedata.js'
 	import { changeColor} from '@/store/changeColor_night.js'
 	import { storeToRefs } from 'pinia'
+	import { lang_sel } from '@/store/lang_selec.js'
 	
-	
+	// 语言的切换
+	let { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天的切换
 	let { night } = storeToRefs(changeColor())
 	let changecolor_night = () => {
@@ -125,9 +128,9 @@
 	}
 	let night_daytime = computed(() => {
 		if(night.value) {
-			return '黑夜'
+			return lang.value["INDEX_TARBAT_BACK"]
 		}else {
-			return '白天'
+			return lang.value["INDEX_TARBAT_WHITE"]
 		}
 	})
 	// 获取必要数据
@@ -187,13 +190,15 @@
 
 <style lang="scss" scoped>
 	.index {
-		height: 100vh;
+		overflow: hidden;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
 		.topbar {
+			top: 0;
 			z-index: 99;
 			font-size: 28rpx;
-			position: relative;
+			position: sticky;
 			width: 100%;
 			height: 8%;
 			background-color: var(--index_header_tarbar);
@@ -230,16 +235,21 @@
 						z-index: -1;
 						display: none;
 						opacity: 0;
-						padding: 45rpx 0 20rpx 30rpx;
+						padding: 45rpx 0 20rpx 20rpx;
 						transition: all .3s linear;
 						position: absolute;
 						top: 65rpx;
 						left: -55rpx;
 						width: 200rpx;
+						
 						background-color: #fff;
 						border-radius: 12rpx;
 						box-shadow: 4rpx 4rpx 20rpx rgba(0,0,0,.2);
 						.list_move {
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							width: 180rpx;
 							transform: scale(.8) !important;
 							font-size: 24rpx;
 							margin-bottom: 10rpx;
