@@ -13,10 +13,10 @@
 
 			<view class="other">
 				<view class="isroot">
-					权限: root
+					<span style="color: rgba(0,0,0, .5);">{{ lang["HOME_ADMINBOX_ROOT"] }}: </span>root
 				</view>
 				<view class="time">
-					时间: {{ newtime }}
+					<span style="color: rgba(0,0,0, .5);">{{ lang["HOME_ADMINBOX_TIME"] }}: </span>{{ newtime }}
 				</view>
 			</view>
 		</el-card>
@@ -36,7 +36,7 @@
 							{{ essaylength }}
 						</view>
 						<view class="num-text">
-							新增发布
+							{{ lang["HOME_NEWBOX_USER"] }}
 						</view>
 					</view>
 				</view>
@@ -53,7 +53,7 @@
 							{{ userlength }}
 						</view>
 						<view class="num-text">
-							新增用户
+							{{ lang["HOME_NEWBOX_ESSAY"] }}
 						</view>
 					</view>
 				</view>
@@ -71,7 +71,7 @@
 							{{ essaylength }}
 						</view>
 						<view class="num-text">
-							全部文章
+							{{ lang["HOME_NEWBOX_ALLUSER"] }}
 						</view>
 					</view>
 				</view>
@@ -89,7 +89,7 @@
 							{{ userlength }}
 						</view>
 						<view class="num-text">
-							全部用户
+							{{ lang["HOME_NEWBOX_ALLESSAY"] }}
 						</view>
 					</view>
 				</view>
@@ -101,7 +101,7 @@
 		<view class="listnew">
 			<el-card class="card3">
 				<view class="toptext">
-					今日热榜
+					{{ lang["HOME_HOT_TEXT"] }}
 				</view>
 
 				<view class="hot-list">
@@ -118,7 +118,7 @@
 						</view>
 
 						<view class="show">
-							查看详情
+							{{ lang["HOME_HOT_SEE"] }}
 						</view>
 					</view>
 				</view>
@@ -156,8 +156,11 @@
 	import {
 		anewdata
 	} from '../../../utils/anewdata.js'
-
-
+	import { lang_sel } from '@/store/lang_selec.js'
+	
+	
+	// 语言切换
+	let { lang } = storeToRefs(lang_sel())
 	// 用户与文章
 	let {
 		userlength,
@@ -178,6 +181,7 @@
 
 	onMounted(async () => {
 		let token = uni.getStorageSync('root')
+		let month_list = lang.value["HOMT_MONTH_LIST"]
 		rootname.value = token.name
 		let echart = echarts;
 		let view = echart.init(document.querySelector('.card4'))
@@ -207,8 +211,12 @@
 			xAxis: [{
 				type: 'category',
 				boundaryGap: false,
-				data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月',
-					'九月', '十月', '十一月', '十二月'
+				// data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月',
+				// 	'九月', '十月', '十一月', '十二月'
+				// ],
+				data: [month_list["ROW1"], month_list["ROW2"], month_list["ROW3"], month_list["ROW4"],
+					month_list["ROW5"], month_list["ROW6"], month_list["ROW7"], month_list["ROW8"], month_list["ROW9"],
+					month_list["ROW10"], month_list["ROW11"], month_list["ROW12"]
 				]
 			}],
 			yAxis: [{
