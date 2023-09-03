@@ -17,4 +17,13 @@
 		box-sizing: border-box;
 	}
 	/*每个页面公共css */
+	::-webkit-scrollbar
+	{
+	    width: 0rpx;
+	}
+	
+	uni-app, uni-page, uni-page-wrapper, uni-page-body {
+		height: 100%;
+	}
+
 </style>
