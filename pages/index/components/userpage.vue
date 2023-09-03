@@ -32,7 +32,7 @@
 			</view>
 		</view>
 		
-		<view class="body">
+		<view class="body" style="overflow: auto;">
 			<!-- // 数据展示 -->
 			<checkbox-group checkbox-group @change="checkboxChange">
 				<userList @senduserid="getuserrowid" v-for="(item, i) in userdatalist" :key="i" :userrow="item" />
