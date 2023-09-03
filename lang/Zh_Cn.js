@@ -1,0 +1,55 @@
+export const zh = {
+	// 首页头部导航
+	"INDEX_TARBAT_OUT": "退出登入",
+	"INDEX_TARBAT_BACK": "深色",
+	"INDEX_TARBAT_WHITE": "浅色",
+	"INDEX_TARBAT_SETTING": "设置",
+	"INDEX_TARBAT_INFO_ROW1": "个人资料",
+	"INDEX_TARBAT_INFO_ROW2": "公告管理",
+	"INDEX_TARBAT_INFO_ROW3": "设置",
+	"INDEX_TARBAT_INFO_ROW4": "退出登入",
+	// 首页nav栏
+	"INDEX_NAV_ROW1": "主页",
+	"INDEX_NAV_ROW2": "所有文章",
+	"INDEX_NAV_ROW3": "用户",
+	"INDEX_NAV_ROW4": "发布公告",
+	"INDEX_NAV_ROW5": "其他",
+	
+	// home 页面
+	"HOME_ADMINBOX_ROOT": "权限",
+	"HOME_ADMINBOX_TIME": "时间",
+	"HOME_NEWBOX_ESSAY": "新增文章",
+	"HOME_NEWBOX_USER": "新增用户",
+	"HOME_NEWBOX_ALLESSAY": "全部文章",
+	"HOME_NEWBOX_ALLUSER": "全部用户",
+	"HOME_HOT_TEXT": "今日热榜",
+	"HOME_HOT_SEE": "查看详情",
+	"HOMT_MONTH_LIST": {
+		"ROW1": "一月",
+		"ROW2": "二月",
+		"ROW3": "三月",
+		"ROW4": "四月",
+		"ROW5": "五月",
+		"ROW6": "六月",
+		"ROW7": "七月",
+		"ROW8": "八月",
+		"ROW9": "九月",
+		"ROW10": "十月",
+		"ROW11": "十一月",
+		"ROW12": "十二月",
+	},
+	
+	// essay 页面
+	"ESSAY_NAV_ROW1": "全部",
+	"ESSAY_NAV_ROW2": "待审核",
+	"ESSAY_NAV_ROW3": "审核通过",
+	"ESSAY_NAV_ROW4": "举报",
+	"ESSAY_NAV_ROW5": "刷新",
+	"ESSAY_SEARCH": "搜索",
+	"ESSAY_LIST_SEE": "查看详情",
+	"ESSAY_LIST_DELETE": "删除文章",
+	"ESSAY_LIST_REBOOT": "重新审核",
+	"ESSAY_LIST_VIOLATION": "确认违规",
+	"ESSAY_LIST_PASS": "通过审核",
+	"ESSAY_LIST_NOVIOLATION": "没有违规"
+}
