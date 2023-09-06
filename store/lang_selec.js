@@ -7,6 +7,17 @@ import { en } from '@/lang/english.js'
 export const lang_sel = defineStore('lang', () => {
 	
 	let lang = ref(en)
+	let default_lang = ref(1)
+	let default_data = uni.getStorageSync('default')
+	
+	if(default_data) {
+		default_lang.value = default_data.lang
+	}else {
+		uni.setStorageSync('default', {
+			lang: 1,
+			color: 2
+		})
+	}
 	
 	const change_lang = (sta) => {
 		switch(sta) {
@@ -24,6 +35,7 @@ export const lang_sel = defineStore('lang', () => {
 	
 	return {
 		lang,
+		default_lang,
 		change_lang
 	}
 })
