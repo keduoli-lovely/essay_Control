@@ -22,10 +22,10 @@
 		
 		<view class="btn">
 			<view class="edit" @click="changestate(userrow)">
-				编辑用户
+				{{ lang["USER_USERLIST_EDIT"] }}
 			</view>
 			<view class="del" @click="tips(userrow.Account)">
-				删除用户
+				{{ lang["USER_USERLIST_DEL"] }}
 			</view>
 		</view>
 		
@@ -46,8 +46,10 @@
 	import { storeToRefs } from 'pinia'
 	import { userdata } from '../../store/Usedata.js'
 	import { delrowuser } from '../../apis/delrowuser.js'
+	import { lang_sel } from '@/store/lang_selec.js'
 	
-	
+	// 语言切换
+	let { lang } = storeToRefs(lang_sel())
 	let user = defineProps({
 		userrow: Object
 	})
