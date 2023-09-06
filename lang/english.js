@@ -50,5 +50,41 @@ export const en = {
 	"ESSAY_LIST_REBOOT": "Reboot audit",
 	"ESSAY_LIST_VIOLATION": "Affirm err",
 	"ESSAY_LIST_PASS": "Pass audit",
-	"ESSAY_LIST_NOVIOLATION": "NOviolation"
+	"ESSAY_LIST_NOVIOLATION": "NOviolation",
+	
+	// user 页面
+	"USER_NAV_ROW1": "Add user",
+	"USER_NAV_ROW2": "Edit",
+	"USER_NAV_ROW3": "Canceling edits",
+	"USER_NAV_ROW4": "select all",
+	"USER_NAV_ROW5": "Deselect all",
+	"USER_NAV_ROW6": "Delete user",
+	"USER_NAV_SELECT_ROW1": "Select",
+	"USER_NAV_SELECT_ROW2": "User",
+	"USER_NAV_ROW7": "Refresh",
+	"USER_INFO_NAME": "Nickname",
+	"USER_INFO_SEX": "Gender",
+	"USER_INFO_PIC": "Head shot",
+	"USER_INFO_ACCOUNT": "Account",
+	"USER_INFO_PWD": "Password",
+	"USER_INFO_CREATETIME": "Creation time",
+	"USER_USERLIST_EDIT": "Editing",
+	"USER_USERLIST_DEL": "Delete",
+	
+	// other 页面
+	"OTHER_SETTING_TITLE": "Setting",
+	"OTHER_SETTING_SUBTITLE": "Admin Details",
+	"OTHER_ADMIN_ACCOUNT": "Admin account",
+	"OTHER_ADMIN_REBOOT": "Reset",
+	"OTHER_ADMIN_CHANGE": "Changes",
+	"OTHER_COLOR": "Appearance",
+	"OHTER_COLOR_BACK": "Dark color",
+	"OHTER_COLOR_WHITE": "Light color",
+	"OTHER_COLOR_AUTO": "automatic",
+	"OTHER_COLOR_SYSTEM": "Following system",
+	"OTHER_LANG_SELECT": "Language",
+	"OTHER_USER_NAME": "Nickname",
+	"OTHER_USER_NAME_TITLE": "Change name",
+	"OTHER_BTN_YES": "Confirm changes",
+	"OTHER_BTN_NO": "Canceling changes"
 }

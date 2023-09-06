@@ -51,5 +51,41 @@ export const zh = {
 	"ESSAY_LIST_REBOOT": "重新审核",
 	"ESSAY_LIST_VIOLATION": "确认违规",
 	"ESSAY_LIST_PASS": "通过审核",
-	"ESSAY_LIST_NOVIOLATION": "没有违规"
+	"ESSAY_LIST_NOVIOLATION": "没有违规",
+	
+	// user 页面
+	"USER_NAV_ROW1": "新增用户",
+	"USER_NAV_ROW2": "编辑",
+	"USER_NAV_ROW3": "取消编辑",
+	"USER_NAV_ROW4": "全选",
+	"USER_NAV_ROW5": "取消全选",
+	"USER_NAV_ROW6": "删除所选用户",
+	"USER_NAV_SELECT_ROW1": "已选择",
+	"USER_NAV_SELECT_ROW2": "个用户",
+	"USER_NAV_ROW7": "刷新",
+	"USER_INFO_NAME": "昵称",
+	"USER_INFO_SEX": "性别",
+	"USER_INFO_PIC": "头像",
+	"USER_INFO_ACCOUNT": "账号",
+	"USER_INFO_PWD": "密码",
+	"USER_INFO_CREATETIME": "创建时间",
+	"USER_USERLIST_EDIT": "编辑用户",
+	"USER_USERLIST_DEL": "删除用户",
+	
+	// other 页面
+	"OTHER_SETTING_TITLE": "设置",
+	"OTHER_SETTING_SUBTITLE": "管理员详情",
+	"OTHER_ADMIN_ACCOUNT": "管理员账号",
+	"OTHER_ADMIN_REBOOT": "重置",
+	"OTHER_ADMIN_CHANGE": "更改",
+	"OTHER_COLOR": "外观",
+	"OHTER_COLOR_BACK": "深色",
+	"OHTER_COLOR_WHITE": "浅色",
+	"OTHER_COLOR_AUTO": "自动",
+	"OTHER_COLOR_SYSTEM": "更随系统",
+	"OTHER_LANG_SELECT": "语言选择",
+	"OTHER_USER_NAME": "昵称",
+	"OTHER_USER_NAME_TITLE": "修改昵称",
+	"OTHER_BTN_YES": "确认修改",
+	"OTHER_BTN_NO": "取消修改"
 }
