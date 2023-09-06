@@ -1,34 +1,39 @@
 <template>
 	<view class="select" :class="night ? 'night' : 'daytime'">
-		<view @click="createuserstate = true" class="item-sel">新增用户</view>
+		<view @click="createuserstate = true" class="item-sel">{{ lang["USER_NAV_ROW1"] }}</view>
 		<view class="item-sel" @click="changechoose">
 			{{ statetext }}
 		</view>
-		<view @click="allsel" class="item-sel">全选</view>
-		<view @click="closesel" class="item-sel">取消全选</view>
-		<view @click="dellistuser" class="item-sel">删除所选用户<span v-if="userlistlength > 0 ">(已选择{{ userlistlength }}个用户)</span></view>
-		<view @click="update" class="item-sel">刷新</view>
+		<view @click="allsel" class="item-sel">{{ lang["USER_NAV_ROW4"] }}</view>
+		<view @click="closesel" class="item-sel">{{ lang["USER_NAV_ROW5"] }}</view>
+		<view @click="dellistuser" class="item-sel">{{ lang["USER_NAV_ROW6"] }}<span v-if="userlistlength > 0 ">
+			( 
+				{{ lang["USER_NAV_SELECT_ROW1"] }}
+				{{ userlistlength }}
+				{{ lang["USER_NAV_SELECT_ROW2"] }}
+			)</span></view>
+		<view @click="update" class="item-sel">{{ lang["USER_NAV_ROW7"] }}</view>
 	</view>
 	<view class="user">
 		<view class="header">
 			<!-- // 顶部 -->
 			<view class="name">
-				昵称
+				{{ lang["USER_INFO_NAME"] }}
 			</view>
 			<view class="sex">
-				性别
+				{{ lang["USER_INFO_SEX"] }}
 			</view>
 			<view class="pic">
-				头像
+				{{ lang["USER_INFO_PIC"] }}
 			</view>
 			<view class="admin">
-				账号
+				{{ lang["USER_INFO_ACCOUNT"] }}
 			</view>
 			<view class="pwd">
-				密码
+				{{ lang["USER_INFO_PWD"] }}
 			</view>
 			<view class="time">
-				创建时间
+				{{ lang["USER_INFO_CREATETIME"] }}
 			</view>
 		</view>
 		
@@ -60,8 +65,12 @@
 	import { ref, computed } from 'vue'
 	import { bubble as bubblesta } from '../../../store/bubblesta.js'
 	import { changeColor } from '@/store/changeColor_night.js'
+	import { lang_sel } from '@/store/lang_selec.js'
 	
 	
+	
+	// 语言切换
+	let { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天
 	let { night } = storeToRefs(changeColor())
 	let { keduoli } = bubblesta()
@@ -75,9 +84,9 @@
 	// 编辑状态
 	let statetext = computed(() => {
 		if(choose.value) {
-			return '取消编辑'
+			return lang.value["USER_NAV_ROW3"]
 		}else {
-			return '编辑'
+			return lang.value["USER_NAV_ROW2"]
 		}
 	})
 	let changechoose = () => {
