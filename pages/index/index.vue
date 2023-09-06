@@ -123,8 +123,18 @@
 	let { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天的切换
 	let { night } = storeToRefs(changeColor())
+	let { change_color } = changeColor()
 	let changecolor_night = () => {
+		let default_data = uni.getStorageSync('default')
 		night.value = !night.value
+		if(night.value) {
+			default_data.color = 1
+			change_color(1)
+		}else {
+			default_data.color = 2
+			change_color(2)
+		}
+		uni.setStorageSync('default', default_data)
 	}
 	let night_daytime = computed(() => {
 		if(night.value) {
