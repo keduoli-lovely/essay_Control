@@ -34,6 +34,7 @@
 	import { storeToRefs } from 'pinia'
 	import { removeessay } from '../../apis/reomEssayrow.js'
 	import { changeessaysta } from '../../apis/classify.js'
+	import { admin_api } from '@/apis/admin_api.js'
 	
 	
 	let { essay_choice } = storeToRefs(maskstate())
@@ -70,10 +71,14 @@
 				}
 				review(index)
 				break;
+			case 4:
+				// fn() 重置管理员密码
+				change_admin_account()
+				break;
 		}
 	}
 	// 删除文章
-	let removeessayfn = async () => {
+	const removeessayfn = async () => {
 		let res = await removeessay(listitem_id.value)
 		keduoli('succeed', res.data.message)
 		essay_choice.value = false
@@ -82,10 +87,23 @@
 	// 提交审核
 	// 重新审核
 	// 处理违规文章
-	let review = async (index) => {
+	const review = async (index) => {
 		let res = await changeessaysta(index, listitem_id.value)
 		keduoli('succeed', res.data.message)
 		getessaydata(20)
+		essay_choice.value = false
+	}
+	
+	// 重置管理员账号/更改管理员账号
+	const change_admin_account = async () => {
+		const res = await admin_api(-1)
+		
+		if(res.data.code === 20011) {
+			keduoli('warn', res.data.message)
+			essay_choice.value = false
+			return
+		}
+		keduoli('succeed', res.data.message)
 		essay_choice.value = false
 	}
 
@@ -116,9 +134,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 10rpx 0;
+		padding: 10rpx 0 20rpx;
 		font-weight: 520;
 		font-size: 38rpx;
+		border-bottom: 1rpx solid rgba(0,0,0,.1);
 		.icon {
 			cursor: pointer;
 			font-size: 40rpx;
@@ -130,7 +149,7 @@
 	}
 	.content {
 		font-size: 26rpx;
-		padding: 40rpx 0;
+		padding: 30rpx 0 40rpx;
 	}
 	.btn {
 		display: flex;
