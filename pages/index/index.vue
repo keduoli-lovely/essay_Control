@@ -11,7 +11,7 @@
 					<image src="../../public/bg.jpg" mode="aspectFill"></image>
 					<view class="move">
 						<view class="list_move">
-							<el-icon class="move_icon"><User /></el-icon>{{ lang["INDEX_TARBAT_INFO_ROW1"] }}
+							<el-icon class="move_icon"><User /></el-icon>{{ rootname }}
 						</view>
 						<view class="list_move">
 							<el-icon class="move_icon"><Notification /></el-icon>{{ lang["INDEX_TARBAT_INFO_ROW2"] }}
@@ -24,20 +24,20 @@
 						</view>
 					</view>
 				</view>
-				<view class="user-name">
-					{{ rootname }}
-				</view>
 				
 				<view class="close" @click="back" style="margin: 0 40rpx;">
-					{{ lang["INDEX_TARBAT_OUT"] }}
+					<el-icon style="font-size: 48rpx;"><SwitchButton /></el-icon>
 				</view>
 				
 				<view class="change_btn_off" @click="changecolor_night" style="margin-right: 40rpx;">
-					{{ night_daytime }}
+					<view class="night_icon" :class="night ? 'night_icon_atv' : ''">
+						<el-icon style="margin-bottom: 10rpx;color: rgba(254,76,64);"><Sunny /></el-icon>
+						<el-icon style="color: skyblue;"><Moon /></el-icon>
+					</view>
 				</view>
 				
 				<view class="setting" style="margin-right: 40rpx;">
-					{{ lang["INDEX_TARBAT_SETTING"] }}
+					<el-icon style="font-size: 48rpx;"><Setting /></el-icon>
 				</view>
 				
 			</view>
@@ -136,13 +136,13 @@
 		}
 		uni.setStorageSync('default', default_data)
 	}
-	let night_daytime = computed(() => {
-		if(night.value) {
-			return lang.value["INDEX_TARBAT_BACK"]
-		}else {
-			return lang.value["INDEX_TARBAT_WHITE"]
-		}
-	})
+	// let night_daytime = computed(() => {
+	// 	if(night.value) {
+	// 		return lang.value["INDEX_TARBAT_BACK"]
+	// 	}else {
+	// 		return lang.value["INDEX_TARBAT_WHITE"]
+	// 	}
+	// })
 	// 获取必要数据
 	onMounted(() => {
 		let token = uni.getStorageSync('root').token
@@ -252,7 +252,7 @@
 						left: -55rpx;
 						width: 200rpx;
 						
-						background-color: #fff;
+						background-color: var(--index_move_bg);
 						border-radius: 12rpx;
 						box-shadow: 4rpx 4rpx 20rpx rgba(0,0,0,.2);
 						.list_move {
@@ -276,10 +276,32 @@
 					}
 				}
 				.close,
-				.change_btn_off {
+				.setting {
+					display: flex;
+					align-items: center;
+				}
+				.night_icon {
+					transition: all .2s linear;
+					display: flex;
+					justify-content: center;
+					flex-direction: column;
+					font-size: 55rpx;
+					height: 120rpx;
+					transform: translateY(4rpx);
+				}
+				.night_icon_atv {
+					font-size: 48rpx !important;
+					transform: translateY(-56rpx) !important;
+				}
+				.close,
+				.change_btn_off,
+				.setting {
+					overflow-y: hidden;
+					width: 60rpx;
+					height: 60rpx;
 					cursor: pointer;
 					&:hover {
-					color: red;
+					color: skyblue;
 				}
 				}
 				.user-name {
