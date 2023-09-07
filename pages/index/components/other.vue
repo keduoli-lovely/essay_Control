@@ -8,7 +8,7 @@
 				<!-- // admin -->
 				<view class="admin">
 					<span class="admin_text">{{ lang["OTHER_ADMIN_ACCOUNT"] }}:</span> 
-					<view class="remove">
+					<view class="remove" @click="show_remove_btn">
 						{{ lang["OTHER_ADMIN_REBOOT"] }}
 					</view>
 					<view class="set_admin">
@@ -100,19 +100,26 @@
 					{{ lang["OTHER_BTN_YES"] }}
 				</view>
 				
-				<view class="save_no" @click="save_btn_sta = false">
+				<view class="save_no" @click="close_lang_color">
 					{{ lang["OTHER_BTN_NO"] }}
 				</view>
 			</view>
 		</view>
 	</el-card>
+	
+	<Choice>
+		<p>你确定要重置密码吗!!!!</p>
+	</Choice>
 </template>
 
 <script setup>
-	import { ref, watch, onMounted } from 'vue'
+	import { ref, watch } from 'vue'
 	import { storeToRefs } from 'pinia'
 	import { lang_sel } from '@/store/lang_selec.js'
 	import { changeColor } from '@/store/changeColor_night.js'
+	import Choice from '@/components/Choice/Choice.vue'
+	import { maskstate } from '@/store/maskstare.js'
+	import { otherdata } from '@/store/otherData.js'
 	
 	
 	// 语言切换
@@ -120,22 +127,25 @@
 	let { default_color, night } = storeToRefs(changeColor())
 	let { change_lang } = lang_sel()
 	let { change_color } = changeColor()
+	let sta = uni.getStorageSync('default')
 	// 主题切换
 	let backColor_sta = ref(2)
 	let lang_sta= ref(1)
-	backColor_sta.value = default_color.value
+	backColor_sta.value = sta.color
 	lang_sta.value = default_lang.value
 	// 确认修改按钮的显示
 	let save_btn_sta = ref(false)
+	// 弹窗
+	let { essay_choice } = storeToRefs(maskstate())
+	let { page_index } = storeToRefs(otherdata())
 	
-	onMounted(() => {
-		if(night.value) {
-			backColor_sta.value = 1
-		}
+	watch(night, () => {
+		sta = uni.getStorageSync('default')
+		backColor_sta.value = sta.color
 	})
 	
 	watch([backColor_sta, lang_sta], () => {
-		if(backColor_sta.value != default_color.value || lang_sta.value != default_lang.value) {
+		if(backColor_sta.value != sta.color || lang_sta.value != default_lang.value) {
 			save_btn_sta.value = true
 		}else {
 			save_btn_sta.value = false
@@ -143,10 +153,8 @@
 	})
 	
 	const change_lang_color = () => {
-		let sta = uni.getStorageSync('default')
-		if(backColor_sta.value != default_color.value) {
+		if(backColor_sta.value != sta.color) {
 			sta.color = backColor_sta.value
-			default_color.value = backColor_sta.value
 			change_color(backColor_sta.value)
 		}else if(lang_sta.value != default_lang.value) {
 			sta.lang = lang_sta.value
@@ -155,6 +163,17 @@
 		}
 		uni.setStorageSync('default', sta)
 		save_btn_sta.value = false
+	}
+	
+	const close_lang_color = () => {
+		save_btn_sta.value = false
+		backColor_sta.value = sta.color
+		lang_sta.value = default_lang.value
+	}
+	
+	const show_remove_btn = () => {
+		essay_choice.value = true
+		page_index.value = 4
 	}
 </script>
 
