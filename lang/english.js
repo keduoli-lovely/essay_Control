@@ -1,8 +1,6 @@
 export const en = {
-	"INDEX_TARBAT_OUT": "Logout",
 	"INDEX_TARBAT_BACK": "Darkcolor",
 	"INDEX_TARBAT_WHITE": "Lightcolor",
-	"INDEX_TARBAT_SETTING": "Settings",
 	"INDEX_TARBAT_INFO_ROW1": "Personaldata",
 	"INDEX_TARBAT_INFO_ROW2": "Announcement",
 	"INDEX_TARBAT_INFO_ROW3": "Settings",
