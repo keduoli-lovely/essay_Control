@@ -1,9 +1,7 @@
 export const zh = {
 	// 首页头部导航
-	"INDEX_TARBAT_OUT": "退出登入",
 	"INDEX_TARBAT_BACK": "深色",
 	"INDEX_TARBAT_WHITE": "浅色",
-	"INDEX_TARBAT_SETTING": "设置",
 	"INDEX_TARBAT_INFO_ROW1": "个人资料",
 	"INDEX_TARBAT_INFO_ROW2": "公告管理",
 	"INDEX_TARBAT_INFO_ROW3": "设置",
