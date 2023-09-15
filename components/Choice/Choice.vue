@@ -37,14 +37,30 @@
 	import { admin_api } from '@/apis/admin_api.js'
 	
 	
-	let { essay_choice } = storeToRefs(maskstate())
+	let { essay_choice, tc_account_showsta, tc_pwd_showsta } = storeToRefs(maskstate())
 	let { listitem_id, page_index, only_index } = storeToRefs(otherdata())
 	let { keduoli } = bubblesta()
 	let { getessaydata } = userdata()
 	
+	const props = defineProps({
+		admin_acc: {
+			type: Number,
+			default: 123456
+		},
+		admin_pwd: {
+			type: Number,
+			default: 123456
+		},
+		admin_name: {
+			type: String,
+			default: 'admin'
+		}
+	})
 	// 关闭弹窗
 	let close = () => {
 		essay_choice.value = false
+		tc_account_showsta.value = true
+		tc_pwd_showsta.value = true
 	}
 	
 	let success = () => {
@@ -72,8 +88,17 @@
 				review(index)
 				break;
 			case 4:
-				// fn() 重置管理员密码
 				change_admin_account()
+				break;
+			case 5:
+				// fn() 更改管理员账号
+				break;
+			case 6:
+			console.log(props.admin_name)
+				// fn() 更改管理员昵称
+				break;
+			default:
+				close()
 				break;
 		}
 	}
