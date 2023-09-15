@@ -16,7 +16,7 @@
 						<view class="list_move">
 							<el-icon class="move_icon"><Notification /></el-icon>{{ lang["INDEX_TARBAT_INFO_ROW2"] }}
 						</view>
-						<view class="list_move">
+						<view class="list_move" @click="pageindex = 5">
 							<el-icon class="move_icon"><Setting /></el-icon>{{ lang["INDEX_TARBAT_INFO_ROW3"] }}
 						</view>
 						<view class="list_move" @click="back">
@@ -37,7 +37,7 @@
 				</view>
 				
 				<view class="setting" style="margin-right: 40rpx;">
-					<el-icon style="font-size: 48rpx;"><Setting /></el-icon>
+					<el-icon style="font-size: 48rpx;" @click="pageindex = 5"><Setting /></el-icon>
 				</view>
 				
 			</view>
