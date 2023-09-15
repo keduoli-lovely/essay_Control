@@ -11,7 +11,7 @@
 					<view class="remove" @click="show_remove_btn">
 						{{ lang["OTHER_ADMIN_REBOOT"] }}
 					</view>
-					<view class="set_admin">
+					<view class="set_admin" @click="show_setadmin_btn">
 						{{ lang["OTHER_ADMIN_CHANGE"] }}
 					</view>
 				</view>
@@ -83,8 +83,8 @@
 					</view>
 				</view>
 				
-				<view class="root_name">
-					<span class="name_text">{{ lang["OTHER_USER_NAME"] }}:</span><text class="change_name" v-title="lang['OTHER_USER_NAME_TITLE']">admin</text>
+				<view class="root_name" @click="nikename_showta">
+					<span class="name_text">{{ lang["OTHER_USER_NAME"] }}:</span><text v-text="admin_nikename" class="change_name" v-title="lang['OTHER_USER_NAME_TITLE']"></text>
 				</view>
 				
 			</view>
@@ -107,13 +107,90 @@
 		</view>
 	</el-card>
 	
-	<Choice>
-		<p>你确定要重置密码吗!!!!</p>
+	<Choice 
+		:admin_acc="admin_account"
+		:admin_pwd="admin_password"
+		:admin_name="admin_name"
+	>
+		<p 
+			v-if="tc_data_change_sta === 1"
+		>
+			你确定要重置密码吗!!!!
+		</p>
+		
+		<view 
+			class="input_tc_box"
+			v-else-if="tc_data_change_sta === 2"
+		>
+			<view class="tc_account">
+				<text 
+					style="margin-right: 12rpx"
+				>
+					账号: 
+				</text>
+				<span 
+					v-if="tc_account_showsta"
+					 class="tc_row1_account"
+				>
+					123456
+				</span>
+				<input 
+					v-else
+					v-model.number="admin_account"
+					maxlength="11" 
+					type="text" 
+					id="tc_change_account" 
+					placeholder="123456"
+				>
+				<span 
+					@click="tc_account_showsta = false" 
+					class="tips_edit" 
+					v-show="tc_account_showsta"
+				>
+					编辑
+				</span>
+			</view>
+			<view class="tc_password">
+				<text style="margin-right: 12rpx">密码: </text>
+				<span 
+					v-if="tc_pwd_showsta" 
+					class="tc_row2_pwd"
+				>
+					123456
+				</span>
+				<input 
+					v-else 
+					v-model.number="admin_password" 
+					type="text" 
+					maxlength="11" 
+					id="tc_change_password" 
+					placeholder="123456"
+				>
+				
+				<span 
+					@click="tc_pwd_showsta = false" 
+					class="tips_edit" 
+					v-show="tc_pwd_showsta"
+				>
+					编辑
+				</span>
+			</view>
+		</view>
+		
+		<view class="nikename_change_input" v-else>
+			昵称: <input 
+					type="text" 
+					maxlength="11" 
+					id="nikename_input" 
+					:placeholder="admin_nikename"
+					v-model="admin_name"
+				>
+		</view>
 	</Choice>
 </template>
 
 <script setup>
-	import { ref, watch } from 'vue'
+	import { ref, watch, onMounted } from 'vue'
 	import { storeToRefs } from 'pinia'
 	import { lang_sel } from '@/store/lang_selec.js'
 	import { changeColor } from '@/store/changeColor_night.js'
@@ -122,6 +199,38 @@
 	import { otherdata } from '@/store/otherData.js'
 	
 	
+	onMounted(() => {
+		// 获取/创建
+		const pic_mask_el = document.querySelector('.pic_mask')
+		create_input(pic_mask_el)
+		// 获取管理员昵称
+		let token = uni.getStorageSync('root')
+		admin_nikename.value = token.name
+	})
+	
+	// 管理员相关
+	let admin_nikename = ref("admin")
+	let admin_name = ref(null)
+	let admin_account = ref(123456)
+	let admin_password = ref(123456)
+	// 创建input的方法
+	const create_input = (el) => {
+		const inp = document.createElement('input')
+		inp.id = 'admin_pic_chnage'
+		inp.type = 'file',
+		inp.style.cssText = `
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			font-size: 0;
+		`
+		inp.accept = '.png, .jpg, .gif'
+		el.appendChild(inp)
+	}
+	// 弹窗中显示的内容-sta
+	let tc_data_change_sta = ref(2)
+
 	// 语言切换
 	let { lang, default_lang } = storeToRefs(lang_sel())
 	let { default_color, night } = storeToRefs(changeColor())
@@ -136,7 +245,7 @@
 	// 确认修改按钮的显示
 	let save_btn_sta = ref(false)
 	// 弹窗
-	let { essay_choice } = storeToRefs(maskstate())
+	let { essay_choice, tc_account_showsta, tc_pwd_showsta } = storeToRefs(maskstate())
 	let { page_index } = storeToRefs(otherdata())
 	
 	watch(night, () => {
@@ -172,8 +281,20 @@
 	}
 	
 	const show_remove_btn = () => {
+		tc_data_change_sta.value = 1
 		essay_choice.value = true
 		page_index.value = 4
+	}
+		
+	const show_setadmin_btn = () => {
+		tc_data_change_sta.value = 2
+		essay_choice.value = true
+		page_index.value = 5
+	}
+	const nikename_showta = () => {
+		tc_data_change_sta.value = 3
+		essay_choice.value = true
+		page_index.value = 6
 	}
 </script>
 
@@ -402,6 +523,53 @@
 				margin-left: 40rpx;
 				background-color: #999;
 			}
+		}
+	}
+	
+	// 弹窗相关内容
+	.input_tc_box {
+		.tc_account,
+		.tc_password {
+			font-size: 34rpx;
+			display: flex;
+			margin-bottom: 15rpx;
+			.tc_row1_account,
+			.tc_row2_pwd {
+				cursor: pointer;
+				color: rgba(0,0,0, .6);
+				padding: 0 40rpx 2rpx 6rpx;
+				border-bottom: 1rpx solid rgba(0,0,0, .3);
+				&:hover {
+					color: skyblue;
+					border-bottom: 1rpx solid skyblue;
+				}
+			}
+			#tc_change_account,
+			#tc_change_password {
+				width: 300rpx;
+				color: rgba(0,0,0, .6);
+				border-bottom: 1rpx solid rgba(0,0,0, .4);
+			}
+			.tips_edit {
+				font-size: 30rpx;
+				color: rgba(0,0,0,.3);
+				padding: 8rpx 0 0 10rpx;
+				cursor: pointer;
+				&:hover {
+					color: skyblue;
+				}
+			}
+		}
+		
+	}
+	
+	.nikename_change_input {
+		display: flex;
+		font-size: 32rpx;
+		#nikename_input {
+			width: 300rpx;
+			margin-left: 12rpx;
+			border-bottom: 1rpx solid rgba(0,0,0, .3);
 		}
 	}
 </style>
