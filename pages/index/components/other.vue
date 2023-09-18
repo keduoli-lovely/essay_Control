@@ -132,15 +132,16 @@
 					v-if="tc_account_showsta"
 					 class="tc_row1_account"
 				>
-					123456
+					{{ admin_account }}
 				</span>
-				<input 
+				<input
+					spellcheck="false"
 					v-else
-					v-model.number="admin_account"
+					v-model="admin_account"
 					maxlength="11" 
 					type="text" 
 					id="tc_change_account" 
-					placeholder="123456"
+					:placeholder="admin_account"
 				>
 				<span 
 					@click="tc_account_showsta = false" 
@@ -156,15 +157,16 @@
 					v-if="tc_pwd_showsta" 
 					class="tc_row2_pwd"
 				>
-					123456
+					{{ admin_password }}
 				</span>
 				<input 
 					v-else 
-					v-model.number="admin_password" 
+					v-model="admin_password" 
 					type="text" 
 					maxlength="11" 
 					id="tc_change_password" 
-					placeholder="123456"
+					:placeholder="admin_password"
+					spellcheck="false"
 				>
 				
 				<span 
@@ -184,6 +186,7 @@
 					id="nikename_input" 
 					:placeholder="admin_nikename"
 					v-model="admin_name"
+					spellcheck="false"
 				>
 		</view>
 	</Choice>
@@ -197,6 +200,7 @@
 	import Choice from '@/components/Choice/Choice.vue'
 	import { maskstate } from '@/store/maskstare.js'
 	import { otherdata } from '@/store/otherData.js'
+	import { get_Admin_account } from '@/apis/getAdmin_Account.js'
 	
 	
 	onMounted(() => {
@@ -204,7 +208,7 @@
 		const pic_mask_el = document.querySelector('.pic_mask')
 		create_input(pic_mask_el)
 		// 获取管理员昵称
-		let token = uni.getStorageSync('root')
+		const token = uni.getStorageSync('root')
 		admin_nikename.value = token.name
 	})
 	
@@ -232,11 +236,11 @@
 	let tc_data_change_sta = ref(2)
 
 	// 语言切换
-	let { lang, default_lang } = storeToRefs(lang_sel())
-	let { default_color, night } = storeToRefs(changeColor())
-	let { change_lang } = lang_sel()
-	let { change_color } = changeColor()
-	let sta = uni.getStorageSync('default')
+	const { lang, default_lang } = storeToRefs(lang_sel())
+	const { default_color, night } = storeToRefs(changeColor())
+	const { change_lang } = lang_sel()
+	const { change_color } = changeColor()
+	const sta = uni.getStorageSync('default')
 	// 主题切换
 	let backColor_sta = ref(2)
 	let lang_sta= ref(1)
@@ -245,8 +249,8 @@
 	// 确认修改按钮的显示
 	let save_btn_sta = ref(false)
 	// 弹窗
-	let { essay_choice, tc_account_showsta, tc_pwd_showsta } = storeToRefs(maskstate())
-	let { page_index } = storeToRefs(otherdata())
+	const { essay_choice, tc_account_showsta, tc_pwd_showsta } = storeToRefs(maskstate())
+	const { page_index } = storeToRefs(otherdata())
 	
 	watch(night, () => {
 		sta = uni.getStorageSync('default')
@@ -286,7 +290,11 @@
 		page_index.value = 4
 	}
 		
-	const show_setadmin_btn = () => {
+	const show_setadmin_btn = async () => {
+		const res = await get_Admin_account()
+		if(!res.data) return
+		admin_account.value = res.data.account
+		admin_password.value = res.data.password
 		tc_data_change_sta.value = 2
 		essay_choice.value = true
 		page_index.value = 5
