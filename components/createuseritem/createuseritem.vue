@@ -14,13 +14,13 @@
 			
 		</view>
 		<view class="name item createname">
-			昵称 <input type="text" placeholder="昵称" v-model="name" />
+			昵称 <input type="text" spellcheck="false" placeholder="昵称" v-model="name" />
 		</view>
 		<view class="account item createacc">
-			账号 <input class="" type="text" placeholder="account" v-model="acc" />
+			账号 <input class="" spellcheck="false" type="text" placeholder="account" v-model="acc" />
 		</view>
 		<view class="pwd item createpwd">
-			密码 <input type="password" placeholder="password" v-model="pwd" />
+			密码 <input type="password" spellcheck="false" placeholder="password" v-model="pwd" />
 		</view>
 		<view class="sex item">
 			性别 <select name="sex" id="sex" v-model="sex">
@@ -30,7 +30,7 @@
 			</select>
 		</view>
 		<view class="age item createage">
-			年龄 <input type="text" id="age" v-model="age">
+			年龄 <input type="text" spellcheck="false" id="age" v-model="age">
 		</view>
 		
 		<view class="btn">
@@ -47,29 +47,29 @@
 </template>
 
 <script setup>
-	import page_BG from '../page_BG/page_BG.vue'
-	import { maskstate } from '../../store/maskstare.js'
+	import page_BG from '@/components/page_BG/page_BG.vue'
+	import { maskstate } from '@/store/maskstare.js'
 	import { storeToRefs } from 'pinia'
 	import { ref, onMounted } from 'vue'
-	import { createFn } from '../../utils/createelection.js'
-	import { pushnewuser } from '../../apis/pushnewuserdata.js'
-	import { bubble } from '../../store/bubblesta.js'
-	import { userdata } from '../../store/Usedata.js'
-	import { setting_pic } from '../../apis/setting_pic.js'
+	import { createFn } from '@/utils/createelection.js'
+	import { pushnewuser } from '@/apis/pushnewuserdata.js'
+	import { bubble } from '@/store/bubblesta.js'
+	import { userdata } from '@/store/Usedata.js'
+	import { setting_pic } from '@/apis/setting_pic.js'
 	
 	// 获取用户数据 / 创建用户后重新获取用户数据
-	let { getuserdata } = userdata()
+	const { getuserdata } = userdata()
 	// 弹窗
-	let { keduoli } = bubble()
+	const { keduoli } = bubble()
 	// 遮罩状态
-	let { createuserstate } = storeToRefs(maskstate())
+	const { createuserstate } = storeToRefs(maskstate())
 	let name = ref('')
 	let acc = ref('')
 	let pwd = ref('')
 	let sex = ref(2)
 	let age = ref('')
 	let sta = ref(false)
-	let baseUrl = ref('http://127.0.0.1:3000/default.png')
+	const baseUrl = ref('http://127.0.0.1:3000/default.png')
 	let createuser
 	
 	onMounted(() => {
@@ -122,9 +122,9 @@
 		
 		// 选择创建用户头像
 		
-		let topel = document.querySelector(".img")
+		const topel = document.querySelector(".img")
 				if(topel) {
-					let inp = document.createElement('input')
+					const inp = document.createElement('input')
 					inp.type = 'file',
 					inp.accept = 'image/*',
 					inp.id = 'pic',
@@ -137,12 +137,12 @@
 						font-size: 0;
 					`
 					inp.addEventListener("change", async (e) => {
-						let data = e.target.files[0]
+						const data = e.target.files[0]
 						if (data && data.type.startsWith("image/")) {
-							let formdata = new FormData()
+							const formdata = new FormData()
 							formdata.append('pic', data)
 							
-							let res = await setting_pic(formdata)
+							const res = await setting_pic(formdata)
 							
 							if(res.data.code == 20010) {
 								keduoli('succeed', res.data.message)
@@ -154,9 +154,9 @@
 				}
 	})
 	
-	let showtextfn = (font, ele) => {
+	const showtextfn = (font, ele) => {
 		sta.value = true
-		let span = createFn(font)
+		const span = createFn(font)
 		span.style.cssText = `
 			position: absolute;
 			bottom: -8px;
@@ -167,7 +167,7 @@
 		`
 		ele.appendChild(span)
 		ele.childNodes[2].className = 'atv-create'
-		let timer = setTimeout(() => {
+		const timer = setTimeout(() => {
 			document.querySelector('.keduoli').remove()
 			ele.childNodes[2].classList.remove('atv-create')
 			clearTimeout(timer)
