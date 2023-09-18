@@ -39,7 +39,7 @@
 					<el-icon class="icon">
 						<CollectionTag />
 					</el-icon>
-					<input placeholder="请输入验证码" spellcheck="false" type="text" v-model.number="user_dict" id="dict">
+					<input placeholder="请输入验证码" spellcheck="false" @blur="changetex" type="text" v-model.number="user_dict" id="dict">
 
 					<view class="dict" title="看不清,换一个" @click="changedict">
 						{{ dicttext }}
@@ -52,6 +52,8 @@
 			</view>
 		</view>
 	</view>
+	
+	<bubble />
 
 	<view class="bg">
 
@@ -65,14 +67,19 @@
 	} from 'vue'
 	import {
 		login
-	} from '../../apis/login.js'
+	} from '@/apis/login.js'
 	import {
 		captcha
-	} from '../../utils/Captcha.js'
+	} from '@/utils/Captcha.js'
 	import {
 		createFn
-	} from '../../utils/createelection.js'
-
+	} from '@/utils/createelection.js'
+	
+	import bubble from '@/components/bubble/bubble.vue'
+	import { bubble as bubblesta } from '@/store/bubblesta.js'
+	
+	
+	const { keduoli } = bubblesta()
 	// 验证码
 	let dicttext = ref('')
 	dicttext.value = captcha(5)
@@ -85,7 +92,7 @@
 	let user_dict = ref('')
 	let sta = ref(false)
 
-	let changetex = async () => {
+	const changetex = async () => {
 			if (sta.value) return
 			if (user_name.value.length >= 5 && user_name.value.length <= 11 ) {
 				if (user_pwd.value.length >= 5 && user_pwd.value.length <= 11) {
@@ -100,6 +107,8 @@
 							uni.reLaunch({
 								url: '/pages/index/index'
 							})
+						}else {
+							keduoli('fail', res.data.message)
 						}
 					}else {
 						user_dict.value = ''
@@ -119,17 +128,17 @@
 			}
 		}
 
-	let showbox1 = () => {
+	const showbox1 = () => {
 		isshow.value = !isshow.value
 	}
 
-	let changedict = () => {
+	const changedict = () => {
 		dicttext.value = captcha(5)
 	}
 
-	let createspan = (font, ele) => {
+	const createspan = (font, ele) => {
 		sta.value = true
-		let span = createFn(font)
+		const span = createFn(font)
 		span.style.cssText = `
 			position: absolute;
 			bottom: -20px;
@@ -140,7 +149,7 @@
 		`
 		ele.appendChild(span)
 		ele.childNodes[2].className = 'atv-create'
-		let timer = setTimeout(() => {
+		const timer = setTimeout(() => {
 			document.querySelector('.keduoli').remove()
 			ele.childNodes[2].classList.remove('atv-create')
 			clearTimeout(timer)
