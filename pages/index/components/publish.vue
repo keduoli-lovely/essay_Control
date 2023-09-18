@@ -68,17 +68,17 @@
 	import { changeColor as color_night } from '@/store/changeColor_night.js'
 	import { storeToRefs } from 'pinia'
 	
-	let { night } = storeToRefs(color_night())
+	const { night } = storeToRefs(color_night())
 	
 	onMounted(() => {
 		createEl()
 	})
 	
 	// input 的生成
-	let createEl = () => {
-		let el1 = document.querySelector('.input_video')
-		let el2 = document.querySelector('.input_app')
-		let el3 = document.querySelectorAll(".pic")
+	const createEl = () => {
+		const el1 = document.querySelector('.input_video')
+		const el2 = document.querySelector('.input_app')
+		const el3 = document.querySelectorAll(".pic")
 		el1.innerHTML = `
 			<input type="file" id="video" style="cursor: pointer;" accept="video/*">
 		`
@@ -93,7 +93,7 @@
 	}
 	// 控制时间的切换
 	let time_setting = ref(false)
-	let changeColor = (i) => {
+	const changeColor = (i) => {
 		if(i.detail.value == 2) {
 			time_setting.value = true
 		}else {

@@ -40,34 +40,34 @@
 
 <script setup>
 	import dayjs from 'dayjs'
-	import changemask from '../changemask/changemask.vue'
-	import { maskstate } from '../../store/maskstare.js'
+	import changemask from '@/components/changemask/changemask.vue'
+	import { maskstate } from '@/store/maskstare.js'
 	import { computed, ref } from 'vue'
 	import { storeToRefs } from 'pinia'
-	import { userdata } from '../../store/Usedata.js'
-	import { delrowuser } from '../../apis/delrowuser.js'
+	import { userdata } from '@/store/Usedata.js'
+	import { delrowuser } from '@/apis/delrowuser.js'
 	import { lang_sel } from '@/store/lang_selec.js'
 	
 	// 语言切换
-	let { lang } = storeToRefs(lang_sel())
-	let user = defineProps({
+	const { lang } = storeToRefs(lang_sel())
+	const user = defineProps({
 		userrow: Object
 	})
-	let emit = defineEmits(['senduserid'])
+	const emit = defineEmits(['senduserid'])
 	
-	let { essaytcstate, choose, allchoose, tckstate } = storeToRefs(maskstate())
-	let { rowuserdata } = storeToRefs(userdata())
+	const { essaytcstate, choose, allchoose, tckstate } = storeToRefs(maskstate())
+	const { rowuserdata } = storeToRefs(userdata())
 	
-	let changestate = (data) => {
+	const changestate = (data) => {
 		essaytcstate.value = true
 		rowuserdata.value = data
 	}
-	let time = computed(() => {
+	const time = computed(() => {
 		return dayjs(user.userrow.createTime).format("YYYY-MM-DD")
 	})
 	
 	// 删除用户
-	let tips = (id) => {
+	const tips = (id) => {
 		emit('senduserid', id)
 		tckstate.value = true
 	}

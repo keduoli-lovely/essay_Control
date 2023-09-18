@@ -35,16 +35,16 @@
 </template>
 
 <script setup>
-	import page_BG from '../page_BG/page_BG.vue'
-	import { maskstate } from "../../store/maskstare.js"
+	import page_BG from '@/components/page_BG/page_BG.vue'
+	import { maskstate } from "@/store/maskstare.js"
 	import { storeToRefs } from 'pinia'
 	
-	let { essaytcstate } = storeToRefs(maskstate())
-	let props = defineProps({
+	const { essaytcstate } = storeToRefs(maskstate())
+	const props = defineProps({
 		datatc: Object
 	})
 	
-	let close = () => {
+	const close = () => {
 		essaytcstate.value = false
 	}
 </script>

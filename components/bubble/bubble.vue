@@ -5,10 +5,10 @@
 </template>
 
 <script setup>
-import { bubble } from '../../store/bubblesta.js'
+import { bubble } from '@/store/bubblesta.js'
 import { storeToRefs } from 'pinia'
 
-let { bubblesta, classsta, tc } = storeToRefs(bubble())
+const { bubblesta, classsta, tc } = storeToRefs(bubble())
 
 
 </script>

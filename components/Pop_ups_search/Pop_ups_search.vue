@@ -22,21 +22,21 @@
 </template>
 
 <script setup>
-	import essayItem from '../../pages/index/components/essayItem.vue'
-	import { maskstate } from '../../store/maskstare.js'
+	import essayItem from '@/pages/index/components/essayItem.vue'
+	import { maskstate } from '@/store/maskstare.js'
 	import { storeToRefs } from 'pinia'
 	import { changeColor } from '@/store/changeColor_night.js'
 	
 	
 	
 	// 黑夜与白天
-	let { night } = storeToRefs(changeColor())
-	let props = defineProps({
+	const { night } = storeToRefs(changeColor())
+	const props = defineProps({
 		essay_list: Array,
 		title: String
 	})
 	
-	let { search_pop } = storeToRefs(maskstate())
+	const { search_pop } = storeToRefs(maskstate())
 	
 </script>
 

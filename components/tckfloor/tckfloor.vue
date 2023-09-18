@@ -23,14 +23,14 @@
 </template>
 
 <script setup>
-	import page_BG from '../page_BG/page_BG.vue'
-	import { maskstate } from '../../store/maskstare.js'
+	import page_BG from '@/components/page_BG/page_BG.vue'
+	import { maskstate } from '@/store/maskstare.js'
 	import { storeToRefs } from 'pinia'
 	
-	let { tckstate } = storeToRefs(maskstate())
+	const { tckstate } = storeToRefs(maskstate())
 	
-	let emit = defineEmits(['yes', 'no'])
-	let porps = defineProps({
+	const emit = defineEmits(['yes', 'no'])
+	const porps = defineProps({
 		account: String
 	})
 	

@@ -25,31 +25,31 @@
 </template>
 
 <script setup>
-	import page_BG from '../page_BG/page_BG.vue'
-	import bubble from '../bubble/bubble.vue'
-	import { maskstate } from '../../store/maskstare.js'
-	import { otherdata } from '../../store/otherData.js'
-	import { bubble as bubblesta } from '../../store/bubblesta.js'
-	import { userdata } from '../../store/Usedata.js'
+	import page_BG from '@/components/page_BG/page_BG.vue'
+	import bubble from '@/components/bubble/bubble.vue'
+	import { maskstate } from '@/store/maskstare.js'
+	import { otherdata } from '@/store/otherData.js'
+	import { bubble as bubblesta } from '@/store/bubblesta.js'
+	import { userdata } from '@/store/Usedata.js'
 	import { storeToRefs } from 'pinia'
-	import { removeessay } from '../../apis/reomEssayrow.js'
-	import { changeessaysta } from '../../apis/classify.js'
+	import { removeessay } from '@/apis/reomEssayrow.js'
+	import { changeessaysta } from '@/apis/classify.js'
 	import { admin_api } from '@/apis/admin_api.js'
 	
 	
-	let { essay_choice, tc_account_showsta, tc_pwd_showsta } = storeToRefs(maskstate())
-	let { listitem_id, page_index, only_index } = storeToRefs(otherdata())
-	let { keduoli } = bubblesta()
-	let { getessaydata } = userdata()
+	const { essay_choice, tc_account_showsta, tc_pwd_showsta } = storeToRefs(maskstate())
+	const { listitem_id, page_index, only_index } = storeToRefs(otherdata())
+	const { keduoli } = bubblesta()
+	const { getessaydata } = userdata()
 	
 	const props = defineProps({
 		admin_acc: {
-			type: Number,
-			default: 123456
+			type: [String, Number],
+			default: "123456"
 		},
 		admin_pwd: {
-			type: Number,
-			default: 123456
+			type: [String, Number],
+			default: "123456"
 		},
 		admin_name: {
 			type: String,
@@ -57,13 +57,13 @@
 		}
 	})
 	// 关闭弹窗
-	let close = () => {
+	const close = () => {
 		essay_choice.value = false
 		tc_account_showsta.value = true
 		tc_pwd_showsta.value = true
 	}
 	
-	let success = () => {
+	const success = () => {
 		switch(page_index.value) {
 			case 0:
 				// fn
@@ -91,7 +91,7 @@
 				change_admin_account()
 				break;
 			case 5:
-				// fn() 更改管理员账号
+				change_admin_acc_pwd()
 				break;
 			case 6:
 			console.log(props.admin_name)
@@ -104,7 +104,7 @@
 	}
 	// 删除文章
 	const removeessayfn = async () => {
-		let res = await removeessay(listitem_id.value)
+		const res = await removeessay(listitem_id.value)
 		keduoli('succeed', res.data.message)
 		essay_choice.value = false
 		getessaydata(20)
@@ -113,7 +113,7 @@
 	// 重新审核
 	// 处理违规文章
 	const review = async (index) => {
-		let res = await changeessaysta(index, listitem_id.value)
+		const res = await changeessaysta(index, listitem_id.value)
 		keduoli('succeed', res.data.message)
 		getessaydata(20)
 		essay_choice.value = false
@@ -121,7 +121,9 @@
 	
 	// 重置管理员账号/更改管理员账号
 	const change_admin_account = async () => {
-		const res = await admin_api(-1)
+		const res = await admin_api({
+			update_sta: -1
+		})
 		
 		if(res.data.code === 20011) {
 			keduoli('warn', res.data.message)
@@ -130,6 +132,28 @@
 		}
 		keduoli('succeed', res.data.message)
 		essay_choice.value = false
+	}
+	
+	// fn() 更改管理员账号
+	const change_admin_acc_pwd = async () => {
+		if(props.admin_acc && props.admin_pwd) {
+			const res = await admin_api({
+				update_sta: 1,
+				account: props.admin_acc,
+				password: props.admin_pwd
+			})
+			
+			if(res.data.code === 20011) {
+				keduoli('warn', res.data.message)
+				essay_choice.value = false
+				return
+			}
+			
+			keduoli('succeed', res.data.message)
+			close()
+		}else {
+			keduoli('fail', "数据错误")
+		}
 	}
 
 </script>

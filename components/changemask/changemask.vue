@@ -60,13 +60,13 @@
 </template>
 
 <script setup>
-	import page_BG from '../page_BG/page_BG.vue'
-	import { maskstate } from '../../store/maskstare.js'
-	import { userdata } from '../../store/Usedata.js'
+	import page_BG from '@/components/page_BG/page_BG.vue'
+	import { maskstate } from '@/store/maskstare.js'
+	import { userdata } from '@/store/Usedata.js'
 	import { storeToRefs } from 'pinia'
 	
-	let { rowuserdata } = storeToRefs(userdata())
-	let { essaytcstate } = storeToRefs(maskstate())
+	const { rowuserdata } = storeToRefs(userdata())
+	const { essaytcstate } = storeToRefs(maskstate())
 	
 
 </script>

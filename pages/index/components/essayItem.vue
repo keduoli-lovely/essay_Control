@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-	let props = defineProps({
+	const props = defineProps({
 		essay_row: Object
 	})
 </script>

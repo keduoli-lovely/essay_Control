@@ -54,42 +54,42 @@
 </template>
 
 <script setup>
-	import bubble from '../../../components/bubble/bubble.vue'
-	import userList from '../../../components/userList/userList.vue'
-	import tckfloor from '../../../components/tckfloor/tckfloor.vue'
-	import createuseritem from '../../../components/createuseritem/createuseritem.vue'
-	import { userdata } from '../../../store/Usedata.js'
-	import { maskstate } from '../../../store/maskstare.js'
-	import { delrowuser } from '../../../apis/delrowuser.js'
+	import bubble from '@/components/bubble/bubble.vue'
+	import userList from '@/components/userList/userList.vue'
+	import tckfloor from '@/components/tckfloor/tckfloor.vue'
+	import createuseritem from '@/components/createuseritem/createuseritem.vue'
+	import { userdata } from '@/store/Usedata.js'
+	import { maskstate } from '@/store/maskstare.js'
+	import { delrowuser } from '@/apis/delrowuser.js'
 	import { storeToRefs } from 'pinia'
 	import { ref, computed } from 'vue'
-	import { bubble as bubblesta } from '../../../store/bubblesta.js'
+	import { bubble as bubblesta } from '@/store/bubblesta.js'
 	import { changeColor } from '@/store/changeColor_night.js'
 	import { lang_sel } from '@/store/lang_selec.js'
 	
 	
 	
 	// 语言切换
-	let { lang } = storeToRefs(lang_sel())
+	const { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天
-	let { night } = storeToRefs(changeColor())
-	let { keduoli } = bubblesta()
+	const { night } = storeToRefs(changeColor())
+	const { keduoli } = bubblesta()
 	// 用户数据列表
 	let userrowid = ref('')
 	let userlist_id = ref([])
-	let { userdatalist } = storeToRefs(userdata())
-	let { getuserdata } = userdata()
-	let { choose, allchoose, tckstate, createuserstate } = storeToRefs(maskstate())
+	const { userdatalist } = storeToRefs(userdata())
+	const { getuserdata } = userdata()
+	const { choose, allchoose, tckstate, createuserstate } = storeToRefs(maskstate())
 	let userlistlength = ref(0)
 	// 编辑状态
-	let statetext = computed(() => {
+	const statetext = computed(() => {
 		if(choose.value) {
 			return lang.value["USER_NAV_ROW3"]
 		}else {
 			return lang.value["USER_NAV_ROW2"]
 		}
 	})
-	let changechoose = () => {
+	const changechoose = () => {
 		if(choose.value) {
 			userlistlength.value = 0
 			allchoose.value = false
@@ -97,7 +97,7 @@
 		choose.value = !choose.value
 	}
 	// 全选状态
-	let allsel = () => {
+	const allsel = () => {
 		if(!choose.value) return
 		let tmp = ref([])
 		allchoose.value = true
@@ -109,14 +109,14 @@
 		userlist_id.value = tmp.value
 	}
 	// 取消全选
-	let closesel = () => {
+	const closesel = () => {
 		if(!choose.value) return
 		allchoose.value = false
 		userlistlength.value = 0
 		userlist_id.value = []
 	}
 	
-	let checkboxChange = (id) => {
+	const checkboxChange = (id) => {
 		userlistlength.value = id.detail.value.length
 		if(id.detail.value.length) {
 			userlist_id.value = id.detail.value
@@ -126,7 +126,7 @@
 	}
 	
 	// 批量删除用户
-	let dellistuser = async () => {
+	const dellistuser = async () => {
 		if(!choose.value) return
 		if(userlist_id.value.length) {
 			// api
@@ -138,8 +138,8 @@
 		}
 	}
 	
-	let deluser = async () => {
-		let res = await delrowuser(userrowid.value)
+	const deluser = async () => {
+		const res = await delrowuser(userrowid.value)
 		if(res.data.code === 20000) {
 			tckstate.value = false
 			keduoli('succeed', res.data.message)
@@ -147,14 +147,14 @@
 		}
 		
 	}
-	let cancel = () => {
+	const cancel = () => {
 		tckstate.value = false
 	}
-	let getuserrowid = (id) => {
+	const getuserrowid = (id) => {
 		userrowid.value = id
 	}
 	
-	let update = () => {
+	const update = () => {
 		getuserdata(20).then(data => {
 			keduoli('succeed', data.data.message)
 		})

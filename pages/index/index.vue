@@ -31,7 +31,7 @@
 				
 				<view class="change_btn_off" @click="changecolor_night" style="margin-right: 40rpx;">
 					<view class="night_icon" :class="night ? 'night_icon_atv' : ''">
-						<el-icon style="margin-bottom: 10rpx;color: rgba(254,76,64);"><Sunny /></el-icon>
+						<el-icon class="sunny" style="margin-bottom: 10rpx;color: rgba(254,76,64);"><Sunny /></el-icon>
 						<el-icon style="color: skyblue;"><Moon /></el-icon>
 					</view>
 				</view>
@@ -108,24 +108,24 @@
 <script setup>
 	import { en } from '@/lang/english.js'
 	import { ref, onMounted, computed } from 'vue'
-	import home from './components/home.vue'
-	import essay from './components/essay.vue'
-	import publish from './components/publish.vue'
-	import other from './components/other.vue'
-	import user from './components/userpage.vue'
+	import home from '@/components/home.vue'
+	import essay from '@/components/essay.vue'
+	import publish from '@/components/publish.vue'
+	import other from '@/components/other.vue'
+	import user from '@/components/userpage.vue'
 	import { onLoad } from '@dcloudio/uni-app'
-	import { userdata } from '../../store/Usedata.js'
+	import { userdata } from '@/store/Usedata.js'
 	import { changeColor} from '@/store/changeColor_night.js'
 	import { storeToRefs } from 'pinia'
 	import { lang_sel } from '@/store/lang_selec.js'
 	
 	// 语言的切换
-	let { lang } = storeToRefs(lang_sel())
+	const { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天的切换
-	let { night } = storeToRefs(changeColor())
-	let { change_color } = changeColor()
-	let changecolor_night = () => {
-		let default_data = uni.getStorageSync('default')
+	const { night } = storeToRefs(changeColor())
+	const { change_color } = changeColor()
+	const changecolor_night = () => {
+		const default_data = uni.getStorageSync('default')
 		night.value = !night.value
 		if(night.value) {
 			default_data.color = 1
@@ -136,22 +136,16 @@
 		}
 		uni.setStorageSync('default', default_data)
 	}
-	// let night_daytime = computed(() => {
-	// 	if(night.value) {
-	// 		return lang.value["INDEX_TARBAT_BACK"]
-	// 	}else {
-	// 		return lang.value["INDEX_TARBAT_WHITE"]
-	// 	}
-	// })
+
 	// 获取必要数据
 	onMounted(() => {
-		let token = uni.getStorageSync('root').token
+		const token = uni.getStorageSync('root').token
 		if(!token) {
 			uni.reLaunch({
 				url: '/pages/admin/admin'
 			})
 		}
-		let { getessaydata, getuserdata } = userdata()
+		const { getessaydata, getuserdata } = userdata()
 		getessaydata(20)
 		getuserdata(20)
 		
@@ -159,7 +153,7 @@
 	let rootname = ref('keduoli')
 	//判断是否登录
 	onLoad(() => {
-		let token = uni.getStorageSync('root')
+		const token = uni.getStorageSync('root')
 		if(token) {
 			rootname.value = token.name
 		}
@@ -176,7 +170,7 @@
 	// 内容区的显示组件
 	let pageindex = ref(1)
 	
-	let navlengthfn = () => {
+	const navlengthfn = () => {
 		if(navlength.value === 4) {
 			navlength.value = 15
 			ismin.value = false
@@ -186,7 +180,7 @@
 		}
 	}
 	
-	let back = () => {
+	const back = () => {
 		let sta = confirm('你确定要退出吗？？？')
 		if(sta) {
 			uni.removeStorageSync('root')
@@ -288,6 +282,13 @@
 					font-size: 55rpx;
 					height: 120rpx;
 					transform: translateY(4rpx);
+					&:hover .sunny {
+						transform: rotate(10deg) !important;
+					}
+					.sunny {
+						transform-origin: center;
+						transition: all .4s ease;
+					}
 				}
 				.night_icon_atv {
 					font-size: 48rpx !important;
@@ -300,9 +301,15 @@
 					width: 60rpx;
 					height: 60rpx;
 					cursor: pointer;
+					transform-origin: center;
+					transition: all .4s ease;
 					&:hover {
-					color: skyblue;
+						color: skyblue;
 				}
+
+				}
+				.setting:hover {
+					transform: rotate(14deg) !important;
 				}
 				.user-name {
 					margin-left: 26rpx;

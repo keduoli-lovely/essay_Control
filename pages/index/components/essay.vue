@@ -95,27 +95,27 @@
 		@todo3: index.vue 页面的根高度为100vh(屏幕高度)导致显示不正常
 	*/
 	import { ref, computed, watch } from 'vue'
-	import Choice from '../../../components/Choice/Choice.vue'
-	import listItem from '../../../components/listItem/listItem.vue'
-	import notification from '../../../components/notification/notification.vue'
-	import { maskstate } from '../../../store/maskstare.js'
+	import Choice from '@/components/Choice/Choice.vue'
+	import listItem from '@/components/listItem/listItem.vue'
+	import notification from '@/components/notification/notification.vue'
+	import { maskstate } from '@/store/maskstare.js'
 	import { storeToRefs } from 'pinia'
-	import { userdata } from '../../../store/Usedata.js'
-	import { otherdata } from '../../../store/otherData.js' 
-	import PopUps from '../../../components/Pop_ups_search/Pop_ups_search.vue'
+	import { userdata } from '@/store/Usedata.js'
+	import { otherdata } from '@/store/otherData.js' 
+	import PopUps from '@/components/Pop_ups_search/Pop_ups_search.vue'
 	import { changeColor } from '@/store/changeColor_night.js'
 	import { lang_sel } from '@/store/lang_selec.js'
 	
 
 	// 语言切换
-	let { lang } = storeToRefs(lang_sel())
+	const { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天
-	let { night } = storeToRefs(changeColor())
+	const { night } = storeToRefs(changeColor())
 	// 文章页面的方法区分
-	let { page_index, tipsText } = storeToRefs(otherdata())
+	const { page_index, tipsText } = storeToRefs(otherdata())
 	// 文章数据
-	let { getessaydata } = userdata()
-	let { essaydata } = storeToRefs(userdata())
+	const { getessaydata } = userdata()
+	const { essaydata } = storeToRefs(userdata())
 	let rotate = ref(false)
 	// 索引
 	let navindex = ref(0)
@@ -128,58 +128,62 @@
 	* 	@report 被举报的数据
 	* `@filterdata 过滤方法
 	*/
-   let filterdata = (sta) => {
+   const filterdata = (sta) => {
    	return Object.values(essaydata.value).filter(item => {
    		return item.state == sta
    	})
    }
-	let review = computed(() => {
+	const review = computed(() => {
 		return filterdata(0)
 	})
-	let backreview = computed(() => {
+	const backreview = computed(() => {
 		return filterdata(1)
 	})
 	
-	let report = computed(() => {
+	const report = computed(() => {
 		return filterdata(-1)
 	})
 	/**
 	 * @decision 判断card2的显示
 */
-	let decision = ref(true)
+	const decision = ref(true)
 	watch([ navindex, essaydata ], () => {
 		if(!essaydata.value[0]?.user_id) {
 			decision.value = false
 		}else {
-			decision.value = true
+			if(navindex.value == 0) {
+				decision.value = essaydata.value.length <= 0 ? false : true 
+			}else if(navindex.value == 1) {
+				decision.value = review.value.length <= 0 ? false : true 
+			}else if(navindex.value == 2) {
+				decision.value = backreview.value.length <= 0 ? false : true 
+			}else if(navindex.value === 3) {
+				decision.value = report.value.length <= 0 ? false : true 
+			}
 		}
-		if(navindex.value == 1) {
-			decision.value = review.value.length <= 0 ? false : true 
-		}else if(navindex.value == 2) {
-			decision.value = backreview.value.length <= 0 ? false : true 
-		}else if(navindex.value === 3) {
-			decision.value = report.value.length <= 0 ? false : true 
-		}
-	})
+		
+	},
+		{ immediate: true }
+	)
    
 	// 弹窗数据
 	let datatc = ref({})
-	let { essaytcstate, search_pop } = storeToRefs(maskstate())
-	let changedata = (data) => {
+	const { essaytcstate, search_pop } = storeToRefs(maskstate())
+	const changedata = (data) => {
 		essaytcstate.value = true
 		datatc.value = data
 	}
-	let todetail = () => {
+	const todetail = () => {
 		search_pop.value = true
 	}
 
-	let addindex = (i) => {
+	const addindex = (i) => {
 		page_index.value = i
 		navindex.value = i
 		left.value = 200 * i
 	}
 	
-	let logding = () => {
+	const logding = () => {
 		rotate.value = true
 		getessaydata(20)
 		setTimeout(() => {
@@ -191,7 +195,7 @@
 	let search_is_show = ref(false)
 	let search_text = ref('')
 	let filter_search_value = ref([])
-	let search_fn = () => {
+	const search_fn = () => {
 		let tmp_array = []
 		if(!search_text.value) {
 			search_is_show.value = false
@@ -208,13 +212,13 @@
 		filter_search_value.value = tmp_array.splice(0, 6)
 	}
 	
-	let search_focus = () => {
+	const search_focus = () => {
 		if(search_text.value) {
 			search_is_show.value = true
 		}
 	}
-	let search_blur = () => {
-		let timer = setTimeout(() => {
+	const search_blur = () => {
+		const timer = setTimeout(() => {
 			search_is_show.value = false
 			clearTimeout(timer)
 		}, 1000)

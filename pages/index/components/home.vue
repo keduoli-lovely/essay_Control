@@ -33,7 +33,7 @@
 
 					<view class="num">
 						<view class="num-size">
-							{{ essaylength }}
+							{{ userlength }}
 						</view>
 						<view class="num-text">
 							{{ lang["HOME_NEWBOX_USER"] }}
@@ -50,7 +50,7 @@
 
 					<view class="num">
 						<view class="num-size">
-							{{ userlength }}
+							{{ essaylength }}
 						</view>
 						<view class="num-text">
 							{{ lang["HOME_NEWBOX_ESSAY"] }}
@@ -68,7 +68,7 @@
 
 					<view class="num">
 						<view class="num-size">
-							{{ essaylength }}
+							{{ userlength }}
 						</view>
 						<view class="num-text">
 							{{ lang["HOME_NEWBOX_ALLUSER"] }}
@@ -86,7 +86,7 @@
 
 					<view class="num">
 						<view class="num-size">
-							{{ userlength }}
+							{{ essaylength }}
 						</view>
 						<view class="num-text">
 							{{ lang["HOME_NEWBOX_ALLESSAY"] }}
@@ -145,49 +145,49 @@
 	import dayjs from 'dayjs'
 	import {
 		userdata
-	} from '../../../store/Usedata.js'
+	} from '@/store/Usedata.js'
 	import {
 		storeToRefs
 	} from 'pinia'
 	import {
 		getroot,
 		gethost
-	} from '../../../apis/getRootDetail.js'
+	} from '@/apis/getRootDetail.js'
 	import {
 		anewdata
-	} from '../../../utils/anewdata.js'
+	} from '@/utils/anewdata.js'
 	import { lang_sel } from '@/store/lang_selec.js'
 	
 	
 	// 语言切换
-	let { lang } = storeToRefs(lang_sel())
+	const { lang } = storeToRefs(lang_sel())
 	// 用户与文章
-	let {
+	const {
 		userlength,
 		essaylength
 	} = storeToRefs(userdata())
 	// 当前时间
-	let newtime = computed(() => {
+	const newtime = computed(() => {
 		return dayjs(new Date()).format('YYYY-MM-DD')
 	})
 
 	let rootname = ref('keduoli')
 	let essayhotdata = ref([])
-	let essayhot = async () => {
-		let res = await gethost()
+	const essayhot = async () => {
+		const res = await gethost()
 		essayhotdata.value = res.data.data
 	}
 
 
 	onMounted(async () => {
-		let token = uni.getStorageSync('root')
-		let month_list = lang.value["HOMT_MONTH_LIST"]
+		const token = uni.getStorageSync('root')
+		const month_list = lang.value["HOMT_MONTH_LIST"]
 		rootname.value = token.name
-		let echart = echarts;
-		let view = echart.init(document.querySelector('.card4'))
+		const echart = echarts;
+		const view = echart.init(document.querySelector('.card4'))
 		// 基本数据
 		essayhot()
-		let rootdetail = await getroot()
+		const rootdetail = await getroot()
 		let {
 			month_user_num,
 			month_essay_num

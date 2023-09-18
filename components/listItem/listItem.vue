@@ -39,23 +39,23 @@
 <script setup>
 	import dayjs from 'dayjs'
 	import { ref, computed } from 'vue'
-	import { maskstate } from '../../store/maskstare.js'
-	import { otherdata } from '../../store/otherData.js'
+	import { maskstate } from '@/store/maskstare.js'
+	import { otherdata } from '@/store/otherData.js'
 	import { storeToRefs } from 'pinia'
 	import { changeColor } from '@/store/changeColor_night.js'
 	import { lang_sel } from '@/store/lang_selec.js'
 	
 	
 	// 语言切换
-	let { lang } = storeToRefs(lang_sel())
+	const { lang } = storeToRefs(lang_sel())
 	// 黑夜与白天
-	let { night } = storeToRefs(changeColor())
+	const { night } = storeToRefs(changeColor())
 	let sta_two = ref(true)
-	let { essay_choice } = storeToRefs(maskstate())
-	let { listitem_id, page_index, tipsText, only_index } = storeToRefs(otherdata())
-	let emit = defineEmits(['datatcFn'])
+	const { essay_choice } = storeToRefs(maskstate())
+	const { listitem_id, page_index, tipsText, only_index } = storeToRefs(otherdata())
+	const emit = defineEmits(['datatcFn'])
 	
-	let props = defineProps({
+	const props = defineProps({
 		essaylist: Object,
 		select1: {
 			type: String,
@@ -66,19 +66,19 @@
 			default: '2'
 		}
 	})
-	let showview = computed(() => {
+	const showview = computed(() => {
 		return props.select1 === '1' ? lang.value["ESSAY_LIST_SEE"] : props.select1
 	})
-	let deleteview = computed(() => {
+	const deleteview = computed(() => {
 		return props.select2 === '2' ? lang.value["ESSAY_LIST_DELETE"] : props.select2
 	})
-	let pushtime = computed(() => {
+	const pushtime = computed(() => {
 		return dayjs(props.essaylist.time).format('YYYY-MM-DD')
 	})
-	let showtc = () => {
+	const showtc = () => {
 		emit('datatcFn')
 	}
-	let choice = () => {
+	const choice = () => {
 		switch(page_index.value) {
 			case 0: 
 				tipsText.value = '确定要删除这篇文章！！'
@@ -103,7 +103,7 @@
 		}
 	}
 	// 全部页面的方法
-	let allpage = () => {
+	const allpage = () => {
 		listitem_id.value = props.essaylist._id
 		essay_choice.value = true
 	}
