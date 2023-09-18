@@ -9,3 +9,4 @@ export const admin_api = (obj) => {
 		}
 	})
 }
+
